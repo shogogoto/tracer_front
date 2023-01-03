@@ -1,4 +1,5 @@
 # https://qiita.com/suzuki0430/items/de0cc70f0b9d2b1ad00b
+# https://snowsystem.net/git/github-actions-react-firebase/
 name: CI
 on:
   pull_request:
@@ -9,21 +10,44 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2 #チェックアウトするアクション
-      - name: Use NodeJS
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Node
         uses: actions/setup-node@v1 #特定バージョンのnodeを設定するアクション
         with:
-          node-version: "12.x"
-      - run: npm ci #dependencyのインストール
-      - run: npm run format:check #コードフォーマットチェック
-      - run: npm test -- --coverage #テスト実行
-        env:
-          CI: true #現在の環境がCI環境であることを仮定
+          node-version: 16.15.1
+
+      - name: Install Dependencies
+        run: |
+          yarn install
+        working-directory: app
+
+      - name: Test
+        run: |
+          yarn test
+        working-directory: app
+
+      - name: Build
+        run: |
+          yarn build
+        working-directory: app
+
+      - name: Deploy preparation
+        run: |
+          yarn add -g surge
+        working-directory: app
+
+      - name: Deploy
+        run: |
+          CI: true # 現在の環境がCI環境であることを仮定
       - name: Build Project #ステージング用のビルドを行うステップ
         if: github.event_name == 'push' #pushイベントのときだけ実行
-        run: npm run build #ビルド実行
+        run: npm run build              #ビルド実行
       - run: npm install -g surge #surgeのインストール
+
       - name: Deploy to Staging #ステージングデプロイを行うステップ
         if: github.event_name == 'push' #pushイベントのときだけ実行
         run: npx surge --project ./build --domain awesome-quiet.surge.sh #デプロイ
