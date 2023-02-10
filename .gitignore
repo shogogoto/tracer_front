@@ -105,4 +105,5 @@ dist
 
 # terraform
 *.tfvars
-.terraform
+terraform.tfstate*
+.terraform*
