@@ -29,8 +29,8 @@ jobs:
       run: |
         npm install
         npm run build
-        ls
         pwd
+        ls
     - id: 'auth'
       uses: 'google-github-actions/auth@v1'
       with:
@@ -41,3 +41,4 @@ jobs:
       with:
         path: './dist'
         destination: ${{ secrets.GCP_BUCKET_NAME }}
+        parent: false
