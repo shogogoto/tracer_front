@@ -9,6 +9,6 @@ resource "google_iam_workload_identity_pool_provider" "example" {
     "google.subject" = "assertion.sub"
   }
   oidc {
-    issuer_uri        = "https://sts.windows.net/azure-tenant-id"
+    issuer_uri        = "https://token.actions.githubusercontent.com"
   }
 }
