@@ -10,7 +10,11 @@ env:
   NODE_VERSION: '16.x'
 
 jobs:
-  build:
+  build-deploy:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -26,19 +30,12 @@ jobs:
         npm install
         npm run build
 
-  deploy:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: 'read'
-      id-token: 'write'
-
-    steps:
     - id: 'auth'
       uses: 'google-github-actions/auth@v1'
       with:
         workload_identity_provider: ${{ secrets.GCP_IAM_PROVIDER }}
         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
-    - id: "upload-floder"
+    - id: "upload-folder"
       uses: 'google-github-actions/upload-cloud-storage@v1'
       with:
         path: '/dist'
