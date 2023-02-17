@@ -44,7 +44,7 @@ jobs:
         destination: ${{ secrets.GCP_BUCKET_NAME }}
         parent: false
 
-    - id: 'uploaded-files'
-      uses: 'foo/bar@main'
-      env:
-        files: '${{ steps.upload-folder.outputs.uploaded }}'
+    # - id: 'uploaded-files'
+    #   uses: 'foo/bar@main'
+    #   env:
+    #     files: '${{ steps.upload-folder.outputs.uploaded }}'
