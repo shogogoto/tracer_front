@@ -7,6 +7,10 @@ const routes = [
     path: "/",
     element: <ConceptRoutes />,
   },
+  {
+    path: "/index.html",
+    element: <ConceptRoutes />,
+  },
 ];
 
 export const AppRoutes = () => {
