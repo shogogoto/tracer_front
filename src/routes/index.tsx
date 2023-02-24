@@ -1,4 +1,4 @@
-import { useRoutes } from "react-router-dom";
+import { useRoutes, useLocation } from "react-router-dom";
 
 import { ConceptRoutes } from "@/features/concept/routes";
 
@@ -8,12 +8,15 @@ const routes = [
     element: <ConceptRoutes />,
   },
   {
-    path: "/react-app-shogogoto/index.html",
+    path: "/index.html",
     element: <ConceptRoutes />,
   },
 ];
 
 export const AppRoutes = () => {
+  const location = useLocation();
+  console.log(location);
+
   const element = useRoutes([...routes]);
 
   return <>{element}</>;
