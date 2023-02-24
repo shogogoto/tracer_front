@@ -7,6 +7,10 @@ const routes = [
     path: "/",
     element: <ConceptRoutes />,
   },
+  {
+    path: "/test",
+    element: <ConceptRoutes />,
+  },
 ];
 
 console.log(location);
