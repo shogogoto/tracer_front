@@ -8,7 +8,7 @@ const routes = [
     element: <ConceptRoutes />,
   },
   {
-    path: "/index.html",
+    path: "/react-app-shogogoto/index.html",
     element: <ConceptRoutes />,
   },
 ];
