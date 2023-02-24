@@ -6,5 +6,7 @@ type AppProviderProps = {
 };
 
 export const AppProvider = ({ children }: AppProviderProps) => {
-  return <BrowserRouter>{children}</BrowserRouter>;
+  return (
+    <BrowserRouter basename="/react-app-shogogoto">{children}</BrowserRouter>
+  );
 };
