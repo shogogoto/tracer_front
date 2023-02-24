@@ -7,6 +7,8 @@ type AppProviderProps = {
 
 export const AppProvider = ({ children }: AppProviderProps) => {
   return (
-    <BrowserRouter basename="/react-app-shogogoto/index.html">{children}</BrowserRouter>
+    <BrowserRouter basename={import.meta.env.VITE_ROUTE_BASE}>
+      {children}
+    </BrowserRouter>
   );
 };

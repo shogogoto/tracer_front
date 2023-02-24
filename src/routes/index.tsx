@@ -7,16 +7,16 @@ const routes = [
     path: "/",
     element: <ConceptRoutes />,
   },
-  {
-    path: "/react-app-shogogoto/index.html",
-    element: <ConceptRoutes />,
-  },
 ];
 
+console.log(location);
+console.log(import.meta.env.MODE);
+console.log(import.meta.env.PROD);
+console.log(import.meta.env.DEV);
+console.log(import.meta.env.VITE_ROUTE_BASE);
+console.log(import.meta.env);
 export const AppRoutes = () => {
   const location = useLocation();
-  console.log(location);
-
   const element = useRoutes([...routes]);
 
   return <>{element}</>;
