@@ -8,8 +8,8 @@ const routes = [
     element: <ConceptRoutes />,
   },
   {
-    path: "/test",
-    element: <ConceptRoutes />,
+    path: "/test/*",
+    element: <div>test sub url</div>,
   },
 ];
 
