@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  NODE_VERSION: '16.x'
+  NODE_VERSION: '18.x'
 
 jobs:
   build-deploy:
@@ -19,32 +19,22 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Set up Node.js
+    - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
 
-    - name: npm install, build
+    - name: Install
       run: |
         npm install
+
+    - name: Test
+      run: |
+        npm run test
+
+    - name: Deploy to surge
+      run: |
         npm run build
-        pwd
-        ls
-    - id: 'auth'
-      uses: 'google-github-actions/auth@v1'
-      with:
-        workload_identity_provider: ${{ secrets.GCP_IAM_PROVIDER }}
-        service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
-
-    - id: "upload-folder"
-      uses: 'google-github-actions/upload-cloud-storage@v1'
-      with:
-        path: './dist'
-        destination: ${{ secrets.GCP_BUCKET_NAME }}
-        parent: false
-
-    # - id: 'uploaded-files'
-    #   uses: 'foo/bar@main'
-    #   env:
-    #     files: '${{ steps.upload-folder.outputs.uploaded }}'
+        npm install -g surge
+        surge ./dist --token ${{ secrets.SURGE_TOKEN }}
