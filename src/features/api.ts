@@ -1,5 +1,8 @@
 import axios from "axios";
-
-export const backendInstance = axios.create({
-  baseURL: "http://localhost/"
+import { AxiosInstance } from "axios";
+import path from "path";
+export const BACKEND = axios.create({
+  baseURL: import.meta.env.VITE_BACKEND_URI
 })
+
+export default BACKEND
