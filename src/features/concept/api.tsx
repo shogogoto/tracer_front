@@ -9,6 +9,13 @@ class ConceptAPI {
     return BACKEND.post("concepts", props)
   }
 
+  public static async update(props: ConceptProps): Promise<AxiosResponse> {
+    return BACKEND.put("concepts", props)
+  }
+
+  public static async createOrUpdate(props: ConceptProps): Promise<AxiosResponse> {
+  }
+
   public static findAll(
     setter: (props: ConceptProps[]) => void
   ): void {

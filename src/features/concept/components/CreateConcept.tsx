@@ -7,7 +7,6 @@ import {
 } from "react-hook-form";
 import { ConceptProps } from "../types";
 import ConceptAPI from "../api";
-import {Concept} from "./Concept";
 
 
 export const CreateConcept = () => {
