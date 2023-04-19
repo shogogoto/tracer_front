@@ -1,5 +1,5 @@
 import { ConceptProps } from "./types";
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from "axios";
 import BACKEND from "../api";
 
 
@@ -13,8 +13,6 @@ class ConceptAPI {
     return BACKEND.put("concepts", props)
   }
 
-  public static async createOrUpdate(props: ConceptProps): Promise<AxiosResponse> {
-  }
 
   public static findAll(
     setter: (props: ConceptProps[]) => void
