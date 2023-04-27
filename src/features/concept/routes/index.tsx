@@ -1,19 +1,17 @@
-import { Navigate, Route, Routes } from "react-router-dom";
-// import Concept from "../components/Concept";
+import { Route, Routes } from "react-router-dom"
+import { type FC } from "react"
 
-import { CreateConcept } from "../components/CreateConcept";
-import { ReadConcept } from "../components/ReadConcepts";
-
-
-export const ConceptRoutes = () => {
+export const ConceptRoutes: FC = () => {
   return (
     <Routes>
-      <Route path="" element={<>
-          {/* <Concept /> */}
-          <CreateConcept />
-          <ReadConcept />
-        </>}
+      <Route
+        path=""
+        element={
+          <>
+            <div>developping now</div>
+          </>
+        }
       />
     </Routes>
-  );
-};
+  )
+}

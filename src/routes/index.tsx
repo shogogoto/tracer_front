@@ -1,6 +1,6 @@
-import { useRoutes, useLocation } from "react-router-dom";
-
-import { ConceptRoutes } from "@/features/concept/routes";
+import { useRoutes } from "react-router-dom"
+import { type FC } from "react"
+import { ConceptRoutes } from "@/features/concept/routes"
 
 const routes = [
   {
@@ -11,17 +11,10 @@ const routes = [
     path: "/test/*",
     element: <div>test sub url</div>,
   },
-];
+]
 
-console.log(location);
-console.log(import.meta.env.MODE);
-console.log(import.meta.env.PROD);
-console.log(import.meta.env.DEV);
-console.log(import.meta.env.VITE_ROUTE_BASE);
-console.log(import.meta.env);
-export const AppRoutes = () => {
-  const location = useLocation();
-  const element = useRoutes([...routes]);
+export const AppRoutes: FC = () => {
+  const element = useRoutes([...routes])
 
-  return <>{element}</>;
-};
+  return <>{element}</>
+}
