@@ -1,12 +1,11 @@
 import { type FC, useState } from "react"
 import { type ConceptProps } from "../types"
-import { CreateConcept } from "./CreateConcept"
 
 export const ConceptItem: FC<ConceptProps> = (props) => {
   const [isEditting] = useState<boolean>(false)
 
   if (isEditting) {
-    return <CreateConcept />
+    return <div>editting</div>
   } else {
     return <div>dummy</div>
   }

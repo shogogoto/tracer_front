@@ -6,10 +6,10 @@ interface AppProviderProps {
   children: React.ReactNode
 }
 
-export const AppProvider: FC = ({ children }: AppProviderProps) => {
+export const AppProvider: FC<AppProviderProps> = (props) => {
   return (
     <BrowserRouter basename={import.meta.env.VITE_ROUTE_BASE}>
-      {children}
+      {props.children}
     </BrowserRouter>
   )
 }
