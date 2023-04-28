@@ -19,7 +19,7 @@ describe("hook: 名前でConceptを取得", () => {
     )
     await waitFor(async () => {
       const waited = await result.current
-      return waited.length === 2
+      return waited.data.length === 2
     })
   })
 })
