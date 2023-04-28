@@ -25,7 +25,7 @@ interface ConceptWithStatistics {
 const baseUrl = import.meta.env.VITE_BACKEND_URI as string
 
 // type ReturnType = Promise<AxiosResponse<ConceptWithStatistics[]>>
-type ReturnType = ConceptWithStatistics[]
+type ReturnType = Promise<ConceptWithStatistics[]>
 
 const useConceptListByName = async (name: string): ReturnType => {
   const url = `${baseUrl}/concepts?name=${name}`
