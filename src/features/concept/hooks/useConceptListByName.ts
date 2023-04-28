@@ -1,6 +1,6 @@
 // import BACKEND from "@/features/api"
 import axios from "axios"
-import { type AxiosResponse } from "axios"
+// import { type AxiosResponse } from "axios"
 
 interface DependencyStatistics {
   upper_neighber_count: number
@@ -24,7 +24,8 @@ interface ConceptWithStatistics {
 
 const baseUrl = import.meta.env.VITE_BACKEND_URI as string
 
-type ReturnType = Promise<AxiosResponse<ConceptWithStatistics[]>>
+// type ReturnType = Promise<AxiosResponse<ConceptWithStatistics[]>>
+type ReturnType = ConceptWithStatistics[]
 
 const useConceptListByName = async (name: string): ReturnType => {
   const url = `${baseUrl}/concepts?name=${name}`

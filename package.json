@@ -50,8 +50,8 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "npm run lint:fix",
-      "npm run format:fix"
+      "eslint --cache --fix --ext .ts,.tsx",
+      "prettier --cache --write"
     ]
   },
   "msw": {
