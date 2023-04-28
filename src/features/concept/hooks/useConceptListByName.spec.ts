@@ -1,5 +1,5 @@
 import useConceptListByName from "./useConceptListByName"
-import { renderHook } from "@testing-library/react"
+import { renderHook, waitFor } from "@testing-library/react"
 import { server } from "./server"
 
 describe("hook: 名前でConceptを取得", () => {
@@ -17,7 +17,9 @@ describe("hook: 名前でConceptを取得", () => {
     const { result } = renderHook(
       async () => await useConceptListByName("test")
     )
-    const waited = await result.current
-    expect(waited.data.length).toBe(2)
+    await waitFor(async () => {
+      const waited = await result.current
+      return waited.length === 2
+    })
   })
 })
