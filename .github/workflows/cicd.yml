@@ -1,0 +1,48 @@
+name: CD
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '18.x'
+
+jobs:
+  cicd:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Install
+      run: |
+        npm ci
+
+    - name: Test
+      run: |
+        npm run test
+
+    - name: Check Lint
+      run: |
+        npm run lint
+
+    - name: Check format
+      run: |
+        npm run format
+
+    - name: Deploy to surge
+      run: |
+        npm run build
+        npm install -g surge
+        surge ./dist ${{ secrets.SURGE_DOMAIN }} --token ${{ secrets.SURGE_TOKEN }}
