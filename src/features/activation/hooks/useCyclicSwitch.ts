@@ -8,9 +8,8 @@ export function countChildren(n: ReactNode): number {
   if (ReactIs.typeOf(n) === undefined) {
     return Children.count(n)
   }
-
   const c = (n as ReactElement).props.children
-  return (ReactIs.isFragment(c) as boolean)
+  return ReactIs.isFragment(c)
     ? Children.count(c.props.children)
     : Children.count(c)
 }
