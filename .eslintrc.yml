@@ -13,6 +13,10 @@ parserOptions:
   project: ./tsconfig.json
 plugins:
   - react
+ignorePatterns:
+  - vite.config.ts
+  - vitest.setup.ts
+
 rules: {
   "react/react-in-jsx-scope": "off"
   , "@typescript-eslint/triple-slash-reference": "off"
