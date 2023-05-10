@@ -21,7 +21,10 @@
       "~/*": ["public/*"]
     },
     "types": [
-      "vitest/globals"
+      "vitest/globals",
+      "jest",
+      "node",
+      "@testing-library/jest-dom"
     ]
   },
   "include": ["src"],
