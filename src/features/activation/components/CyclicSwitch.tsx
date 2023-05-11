@@ -2,17 +2,17 @@ import type { FC } from "react"
 import { useKey } from "react-use"
 
 import type { CyclicSwitchProps } from "../types"
-import useCyclicSwitch from "../hooks/useCyclicSwitch"
+import useRotateChildren from "../hooks/useRotateChildren"
 
 const CyclicSwitch: FC<CyclicSwitchProps> = (props) => {
-  const { child, cycle } = useCyclicSwitch(props.children)
+  const { child, increment } = useRotateChildren(props.children)
 
   function handleClick(): void {
-    cycle()
+    increment()
   }
 
   function handleKeyDown(): void {
-    cycle()
+    increment()
   }
 
   useKey("Enter", handleKeyDown, {}, [child])

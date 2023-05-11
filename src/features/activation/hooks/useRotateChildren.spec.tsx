@@ -3,7 +3,10 @@ import { act } from "react-dom/test-utils"
 import { type ReactNode } from "react"
 import flattenChildren from "react-flatten-children"
 
-import useCyclicSwitch, { countChildren } from "./useCyclicSwitch"
+import useRotateChildren, {
+  countChildren,
+  type ReturnType,
+} from "./useRotateChildren"
 
 const e1 = <div></div>
 const e2 = (
@@ -36,25 +39,37 @@ describe.each<[ReactNode, number, string]>([
 })
 
 describe("useCyclicSwitch", () => {
+  function inc(ret: ReturnType): void {
+    act(() => {
+      ret.increment()
+    })
+  }
+
+  function dec(ret: ReturnType): void {
+    act(() => {
+      ret.decrement()
+    })
+  }
+
   test("not element", () => {
     const e = "string"
-    const { result } = renderHook(() => useCyclicSwitch(e))
+    const { result } = renderHook(() => useRotateChildren(e))
 
     expect(result.current.child).toBeNull()
-    act(() => {
-      result.current.cycle()
-    })
+    inc(result.current)
+    expect(result.current.child).toBeNull()
+    dec(result.current)
     expect(result.current.child).toBeNull()
   })
 
   test("no children", () => {
     const e = <div></div>
-    const { result } = renderHook(() => useCyclicSwitch(e))
+    const { result } = renderHook(() => useRotateChildren(e))
 
     expect(result.current.child).toBeNull()
-    act(() => {
-      result.current.cycle()
-    })
+    inc(result.current)
+    expect(result.current.child).toBeNull()
+    dec(result.current)
     expect(result.current.child).toBeNull()
   })
 
@@ -68,21 +83,21 @@ describe("useCyclicSwitch", () => {
         </>
       </>
     )
-    const { result } = renderHook(() => useCyclicSwitch(e))
+    const { result } = renderHook(() => useRotateChildren(e))
 
     const children = flattenChildren(e)
     expect(result.current.child).toEqual(children[0])
-    act(() => {
-      result.current.cycle()
-    })
+    inc(result.current)
     expect(result.current.child).toEqual(children[1])
-    act(() => {
-      result.current.cycle()
-    })
+    inc(result.current)
     expect(result.current.child).toEqual(children[2])
-    act(() => {
-      result.current.cycle()
-    })
+    inc(result.current)
+    expect(result.current.child).toEqual(children[0])
+    dec(result.current)
+    expect(result.current.child).toEqual(children[2])
+    dec(result.current)
+    expect(result.current.child).toEqual(children[1])
+    dec(result.current)
     expect(result.current.child).toEqual(children[0])
   })
 })
