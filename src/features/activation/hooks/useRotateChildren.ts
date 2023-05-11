@@ -1,16 +1,9 @@
-import { Children, type ReactNode, useState } from "react"
+import { type ReactNode, useState } from "react"
 
 import * as ReactIs from "react-is"
 import flattenChildren from "react-flatten-children"
 
-export function countChildren(n: ReactNode): number {
-  if (ReactIs.isElement(n)) {
-    const c = n.props.children
-    return flattenChildren(c).length
-  } else {
-    return Children.count(n)
-  }
-}
+import { countChildren } from "./funcs"
 
 export type ReturnType = {
   increment: () => void

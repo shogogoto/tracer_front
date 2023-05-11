@@ -6,20 +6,11 @@ import useRotateChildren from "../hooks/useRotateChildren"
 
 const CyclicSwitch: FC<CyclicSwitchProps> = (props) => {
   const { child, increment } = useRotateChildren(props.children)
-
-  function handleClick(): void {
-    increment()
-  }
-
-  function handleKeyDown(): void {
-    increment()
-  }
-
-  useKey("Enter", handleKeyDown, {}, [child])
+  useKey("Enter", increment, {}, [child])
 
   return (
     <div
-      onClick={handleClick}
+      onClick={increment}
       data-testid="cycle-switch"
     >
       {child}

@@ -1,42 +1,8 @@
 import { renderHook } from "@testing-library/react"
 import { act } from "react-dom/test-utils"
-import { type ReactNode } from "react"
 import flattenChildren from "react-flatten-children"
 
-import useRotateChildren, {
-  countChildren,
-  type ReturnType,
-} from "./useRotateChildren"
-
-const e1 = <div></div>
-const e2 = (
-  <div>
-    <div></div>
-    <div></div>
-  </div>
-)
-const e3 = (
-  <>
-    <>
-      <div></div>
-      <div></div>
-    </>
-  </>
-)
-
-describe.each<[ReactNode, number, string]>([
-  [e1, 0, "empty"],
-  [e2, 2, "two children"],
-  [e3, 2, "fragment"],
-  [1, 1, "number"],
-  ["", 1, "string"],
-  [null, 0, "null"],
-  [undefined, 0, "undefined"],
-])("countChildren", (x, expected, caseName) => {
-  test(`parameterize ${caseName}`, () => {
-    expect(countChildren(x)).toBe(expected)
-  })
-})
+import useRotateChildren, { type ReturnType } from "./useRotateChildren"
 
 describe("useCyclicSwitch", () => {
   function inc(ret: ReturnType): void {
@@ -99,5 +65,7 @@ describe("useCyclicSwitch", () => {
     expect(result.current.child).toEqual(children[1])
     dec(result.current)
     expect(result.current.child).toEqual(children[0])
+    dec(result.current)
+    expect(result.current.child).toEqual(children[2])
   })
 })
