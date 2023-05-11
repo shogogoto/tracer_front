@@ -18,7 +18,10 @@ const CyclicSwitch: FC<CyclicSwitchProps> = (props) => {
   useKey("Enter", handleKeyDown, {}, [child])
 
   return (
-    <div onClick={handleClick} data-testid="cycle-switch">
+    <div
+      onClick={handleClick}
+      data-testid="cycle-switch"
+    >
       {child}
     </div>
   )
