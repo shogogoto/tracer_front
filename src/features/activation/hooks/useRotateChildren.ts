@@ -1,5 +1,5 @@
-import { type ReactNode, useState } from "react"
-
+import { useState } from "react"
+import type { ReactNode, Dispatch } from "react"
 import * as ReactIs from "react-is"
 import flattenChildren from "react-flatten-children"
 
@@ -9,23 +9,33 @@ export type ReturnType = {
   increment: () => void
   decrement: () => void
   child: ReactNode
+  setIndex: Dispatch<number>
 }
 
 // 子要素の表示を切り替える
 const useRotateChildren = (n: ReactNode): ReturnType => {
   const count = countChildren(n)
-  const [index, setIndex] = useState(0)
+  const [index, setIndexDefault] = useState(0)
 
   const increment = (): void => {
     if (count === 0) return
     const nextIndex = (index + 1) % count
-    setIndex(nextIndex)
+    setIndexDefault(nextIndex)
   }
 
   const decrement = (): void => {
     if (count === 0) return
     const prevIndex = (index - 1 + count) % count
-    setIndex(prevIndex)
+    setIndexDefault(prevIndex)
+  }
+
+  const setIndex = (i: number): void => {
+    if (i < 0 || count <= i) {
+      const msg = `${i} is out of index [0,${count})`
+      throw new RangeError(msg)
+    } else {
+      setIndexDefault(i)
+    }
   }
 
   let child: ReactNode = null
@@ -37,6 +47,7 @@ const useRotateChildren = (n: ReactNode): ReturnType => {
     increment,
     decrement,
     child,
+    setIndex,
   }
 }
 

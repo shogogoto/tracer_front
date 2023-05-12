@@ -5,18 +5,6 @@ import flattenChildren from "react-flatten-children"
 import useRotateChildren, { type ReturnType } from "./useRotateChildren"
 
 describe("useCyclicSwitch", () => {
-  function inc(ret: ReturnType): void {
-    act(() => {
-      ret.increment()
-    })
-  }
-
-  function dec(ret: ReturnType): void {
-    act(() => {
-      ret.decrement()
-    })
-  }
-
   test("not element", () => {
     const e = "string"
     const { result } = renderHook(() => useRotateChildren(e))
@@ -40,18 +28,9 @@ describe("useCyclicSwitch", () => {
   })
 
   test("3 children", () => {
-    const e = (
-      <>
-        <>
-          <p>1</p>
-          <p>2</p>
-          <p>3</p>
-        </>
-      </>
-    )
-    const { result } = renderHook(() => useRotateChildren(e))
+    const { result } = renderHook(() => useRotateChildren(e3))
+    const children = flattenChildren(e3)
 
-    const children = flattenChildren(e)
     expect(result.current.child).toEqual(children[0])
     inc(result.current)
     expect(result.current.child).toEqual(children[1])
@@ -68,4 +47,48 @@ describe("useCyclicSwitch", () => {
     dec(result.current)
     expect(result.current.child).toEqual(children[2])
   })
+
+  test("set index by direct", () => {
+    const { result } = renderHook(() => useRotateChildren(e3))
+    const children = flattenChildren(e3)
+    function setIndex(i: number): void {
+      act(() => {
+        result.current.setIndex(i)
+      })
+    }
+
+    setIndex(0)
+    expect(result.current.child).toEqual(children[0])
+    setIndex(2)
+    expect(result.current.child).toEqual(children[2])
+    setIndex(1)
+    expect(result.current.child).toEqual(children[1])
+
+    expect(() => {
+      setIndex(999)
+    }).toThrowError()
+    expect(result.current.child).toEqual(children[1]) // child wont change
+  })
+
+  const e3 = (
+    <>
+      <>
+        <p>1</p>
+        <p>2</p>
+        <p>3</p>
+      </>
+    </>
+  )
+
+  function inc(ret: ReturnType): void {
+    act(() => {
+      ret.increment()
+    })
+  }
+
+  function dec(ret: ReturnType): void {
+    act(() => {
+      ret.decrement()
+    })
+  }
 })
