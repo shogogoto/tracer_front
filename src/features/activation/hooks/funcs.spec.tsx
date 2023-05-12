@@ -1,6 +1,7 @@
 import { type ReactNode } from "react"
+import flattenChildren from "react-flatten-children"
 
-import { countChildren } from "./funcs"
+import { countChildren, indexChild } from "./funcs"
 
 const e1 = <div></div>
 const e2 = (
@@ -29,5 +30,17 @@ describe.each<[ReactNode, number, string]>([
 ])("countChildren", (x, expected, caseName) => {
   test(`parameterize ${caseName}`, () => {
     expect(countChildren(x)).toBe(expected)
+  })
+})
+
+describe("indexChild", () => {
+  const children = flattenChildren(e3)
+
+  test("", () => {
+    expect(indexChild(e3, children[0])).toBe(0)
+    expect(indexChild(e3, children[1])).toBe(1)
+    expect(indexChild(e3, null)).toBe(-1)
+    expect(indexChild(e3, undefined)).toBe(-1)
+    expect(indexChild(e3, <div></div>)).toBe(-1)
   })
 })
