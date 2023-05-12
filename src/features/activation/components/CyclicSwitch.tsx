@@ -2,7 +2,7 @@ import type { FC } from "react"
 import { useKey } from "react-use"
 
 import type { CyclicSwitchProps } from "../types"
-import useRotateChildren from "../hooks/useRotateChildren"
+import { useRotateChildren } from "../hooks"
 
 const CyclicSwitch: FC<CyclicSwitchProps> = (props) => {
   const { child, increment } = useRotateChildren(props.children)
