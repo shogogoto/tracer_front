@@ -1,7 +1,6 @@
 import { renderHook } from "@testing-library/react"
 import { act } from "react-dom/test-utils"
 import flattenChildren from "react-flatten-children"
-import isEqual from "react-fast-compare"
 import type { ReactNode } from "react"
 
 import useActivateChild from "./useActivateChild"
@@ -21,10 +20,11 @@ describe("useActivateChild", () => {
     expect(result.current.activated).toBeNull()
 
     function check(i: number): void {
+      expect(result.current.isActivated(children[i])).toBeFalsy()
       act(() => {
         result.current.activate(children[i])
       })
-      expect(isEqual(result.current.activated, children[i])).toBeTruthy()
+      expect(result.current.isActivated(children[i])).toBeTruthy()
     }
 
     check(0)

@@ -1,6 +1,7 @@
 import { useState } from "react"
 import type { ReactNode } from "react"
 import flattenChildren from "react-flatten-children"
+import isEqual from "react-fast-compare"
 
 import { indexChild } from "./funcs"
 
@@ -8,6 +9,7 @@ export type ReturnType = {
   activated: ReactNode
   activate: (target: ReactNode) => void
   deactivate: () => void
+  isActivated: (node: ReactNode) => boolean
 }
 
 const useActivateChild = (n: ReactNode): ReturnType => {
@@ -28,10 +30,15 @@ const useActivateChild = (n: ReactNode): ReturnType => {
     setActivated(null)
   }
 
+  function isActivated(node: ReactNode): boolean {
+    return isEqual(activated, node)
+  }
+
   return {
     activated,
     activate,
     deactivate,
+    isActivated,
   }
 }
 
