@@ -1,10 +1,13 @@
-import type { FC } from "react"
+import type { FC, ReactNode } from "react"
 import { useKey } from "react-use"
 
-import type { CyclicSwitchProps } from "../types"
 import { useRotateChildren } from "../hooks"
 
-const CyclicSwitch: FC<CyclicSwitchProps> = (props) => {
+type Props = {
+  children: ReactNode
+}
+
+const CyclicSwitch: FC<Props> = (props) => {
   const { child, increment } = useRotateChildren(props.children)
   useKey("Enter", increment, {}, [child])
 
