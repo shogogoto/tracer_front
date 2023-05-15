@@ -1,6 +1,5 @@
-import { useState } from "react"
+import { isValidElement, useState } from "react"
 import type { ReactNode, Dispatch } from "react"
-import * as ReactIs from "react-is"
 import flattenChildren from "react-flatten-children"
 
 import { countChildren } from "./funcs"
@@ -39,7 +38,7 @@ const useRotateChildren = (n: ReactNode): ReturnType => {
   }
 
   let child: ReactNode = null
-  if (ReactIs.isElement(n) && count > 0) {
+  if (isValidElement(n) && count > 0) {
     child = flattenChildren(n.props.children)[index]
   }
 

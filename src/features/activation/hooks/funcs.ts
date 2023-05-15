@@ -1,11 +1,10 @@
-import { Children, type ReactNode } from "react"
-import * as ReactIs from "react-is"
+import { Children, type ReactNode, isValidElement } from "react"
 import flattenChildren from "react-flatten-children"
 import isEqual from "react-fast-compare"
 
 export function countChildren(n: ReactNode): number {
   let count: number = -1
-  if (ReactIs.isElement(n)) {
+  if (isValidElement(n)) {
     count = flattenChildren(n.props.children).length
   } else {
     count = Children.count(n)
