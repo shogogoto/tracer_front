@@ -30,7 +30,7 @@ const Activation: FC<Props> = (props) => {
     toggleStyled(props.isActivated(props.children))
   }
 
-  const handleClick = (e): void => {
+  const handleClick = (): void => {
     activate()
     ref.current?.click()
   }
