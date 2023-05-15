@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react"
 import { act } from "react-dom/test-utils"
 import flattenChildren from "react-flatten-children"
-import type { ReactNode } from "react"
+import type { ReactNode, ReactElement } from "react"
 
 import useActivateChild from "./useActivateChild"
 
@@ -22,7 +22,7 @@ describe("useActivateChild", () => {
     function check(i: number): void {
       expect(result.current.isActivated(children[i])).toBeFalsy()
       act(() => {
-        result.current.activate(children[i])
+        result.current.activate(children[i] as ReactElement)
       })
       expect(result.current.isActivated(children[i])).toBeTruthy()
     }
@@ -42,7 +42,7 @@ describe("useActivateChild", () => {
     function activate(n: ReactNode) {
       return (): void => {
         act(() => {
-          result.current.activate(n)
+          result.current.activate(n as ReactElement)
         })
       }
     }
