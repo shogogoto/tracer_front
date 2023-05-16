@@ -3,7 +3,7 @@ import { act } from "react-dom/test-utils"
 import flattenChildren from "react-flatten-children"
 import type { ReactNode, ReactElement } from "react"
 
-import useActivateChild from "./useActivateChild"
+import useCurrentElement from "./useCurrentElement"
 
 const e = (
   <>
@@ -13,18 +13,18 @@ const e = (
   </>
 )
 
-describe("useActivateChild", () => {
-  test("activate child", () => {
+describe("useCuremntElement", () => {
+  test("set/unset element", () => {
     const children = flattenChildren(e)
-    const { result } = renderHook(() => useActivateChild(e))
+    const { result } = renderHook(() => useCurrentElement(null))
     expect(result.current[0]).toBeNull()
 
     function check(i: number): void {
-      expect(result.current[1].isActivated(children[i])).toBeFalsy()
+      expect(result.current[1].isCurrent(children[i])).toBe(false)
       act(() => {
-        result.current[1].activate(children[i] as ReactElement)
+        result.current[1].set(children[i] as ReactElement)
       })
-      expect(result.current[1].isActivated(children[i])).toBeTruthy()
+      expect(result.current[1].isCurrent(children[i])).toBe(true)
     }
 
     check(0)
@@ -32,17 +32,17 @@ describe("useActivateChild", () => {
     check(2)
 
     act(() => {
-      result.current[1].deactivate()
+      result.current[1].unset()
     })
     expect(result.current[0]).toBeNull()
   })
 
-  test("activate not child", () => {
-    const { result } = renderHook(() => useActivateChild(e))
+  test("set not element", () => {
+    const { result } = renderHook(() => useCurrentElement(e))
     function activate(n: ReactNode) {
       return (): void => {
         act(() => {
-          result.current[1].activate(n as ReactElement)
+          result.current[1].set(n as ReactElement)
         })
       }
     }
