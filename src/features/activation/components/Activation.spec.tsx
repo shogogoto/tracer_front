@@ -1,6 +1,5 @@
 import { render } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import type { ReactElement, ReactNode } from "react"
 import { forwardRef } from "react"
 import { useKey } from "react-use"
 
@@ -8,17 +7,8 @@ import Activation from "./Activation"
 
 describe("Activation", () => {
   test("enable style", async () => {
-    let flag = false
-    const isActivated = (n: ReactElement): boolean => flag
-    const activate = (n: ReactNode): void => {
-      flag = true
-    }
-
     const tgt = (
-      <Activation
-        isActivated={isActivated}
-        activate={activate}
-      >
+      <Activation>
         <TestElement />
       </Activation>
     )
@@ -31,17 +21,14 @@ describe("Activation", () => {
     expect(ac).not.toHaveClass("css-0") // emotion
   })
 
-  // 子をckick
+  // 子をclick
   test("fire click event of children", async () => {
     let clicked = false
     const handleClick = (): void => {
       clicked = true
     }
     const tgt = (
-      <Activation
-        isActivated={(n) => true}
-        activate={() => {}}
-      >
+      <Activation>
         <TestElement handleClick={handleClick} />
       </Activation>
     )
@@ -61,10 +48,7 @@ describe("Activation", () => {
       entered = true
     }
     const tgt = (
-      <Activation
-        isActivated={(n) => true}
-        activate={() => {}}
-      >
+      <Activation>
         <TestElement handleEnter={handleEnter} />
       </Activation>
     )
@@ -72,8 +56,8 @@ describe("Activation", () => {
     const user = userEvent.setup()
     const x = render(tgt)
     const ac = x.getByTestId("activation")
-    ac.focus()
     expect(entered).toBe(false)
+    ac.focus()
     await user.keyboard("{enter}")
     expect(entered).toBe(true)
   })

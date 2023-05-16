@@ -1,14 +1,9 @@
-import {
-  type ReactNode,
-  type FC,
-  useState,
-  useRef,
-  type ReactElement,
-  type RefObject,
-  cloneElement,
-} from "react"
-import { useKey } from "react-use"
+import { cloneElement } from "react"
+import type { ReactNode, FC } from "react"
 import { css } from "@emotion/react"
+
+import type { Activatable } from "../types"
+import useActivation from "../hooks/useActivation"
 
 export const cssActivated = css`
   color: red;
@@ -16,33 +11,21 @@ export const cssActivated = css`
 `
 
 type Props = {
-  isActivated: (n: ReactElement) => boolean
-  activate: (n: ReactNode) => void
-  children: ReactElement<{ ref: RefObject<HTMLElement> }>
+  children: Activatable
+  action?: VoidFunction
+  init?: ReactNode
 }
 
 const Activation: FC<Props> = (props) => {
-  const ref = useRef<HTMLElement>(null)
-  const [isStyled, toggleStyled] = useState(props.isActivated(props.children))
+  const [state, funcs] = useActivation(props)
 
-  const activate = (): void => {
-    props.activate(props.children)
-    toggleStyled(props.isActivated(props.children))
-  }
-
-  const handleClick = (): void => {
-    activate()
-    ref.current?.click()
-  }
-
-  useKey("Enter", activate, {}, [isStyled])
   return (
     <div
-      css={isStyled && cssActivated}
-      onClick={handleClick}
+      css={state.isActive && cssActivated}
+      onClick={funcs.handleClick}
       data-testid="activation"
     >
-      {cloneElement(props.children, { ref })}
+      {cloneElement(props.children, { ref: state.ref })}
     </div>
   )
 }

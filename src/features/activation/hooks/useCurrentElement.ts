@@ -31,9 +31,7 @@ const useCurrentElement = (init: ReactNode): ReturnType => {
   }, [node])
 
   const isCurrent = useCallback(
-    (n: ReactNode): boolean => {
-      return isEqual(node, n)
-    },
+    (n: ReactNode): boolean => isEqual(node, n),
     [node]
   )
 

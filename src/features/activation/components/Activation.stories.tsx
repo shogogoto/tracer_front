@@ -11,16 +11,19 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+const e1 = <div>Activated</div>
+const e2 = <div>Deactivated</div>
+
 export const Activated: Story = {
   args: {
-    children: <div>Activated</div>,
-    isActivated: (n) => true,
+    children: e1,
+    init: e1,
   },
 }
 
 export const Deactivated: Story = {
   args: {
-    children: <div>Deactivated</div>,
-    isActivated: (n) => false,
+    children: e2,
+    init: e1,
   },
 }
