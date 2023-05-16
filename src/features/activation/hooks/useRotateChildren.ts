@@ -1,61 +1,58 @@
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import type { ReactNode, Dispatch } from "react"
-import flattenChildren from "react-flatten-children"
-import * as ReactIs from "react-is"
-import { countChildren } from "./funcs"
+import { countChildren, rotatableToArray } from "./funcs"
 
 import { type Rotatable } from "../types"
 
-export type ReturnType = {
+type ReturnFuncs = {
   increment: () => void
   decrement: () => void
-  child: ReactNode
   setIndex: Dispatch<number>
 }
 
+export type ReturnType = [child: ReactNode, funcs: ReturnFuncs]
+
 // 要素を切り替える
 const useRotateChildren = (n: Rotatable): ReturnType => {
-  let children: ReactNode[] = []
-  if (Array.isArray(n)) {
-    children = n
-  } else if (ReactIs.isFragment(n)) {
-    children = flattenChildren(n)
-  } else {
-    children = [n]
-  }
+  const children = rotatableToArray(n)
 
   const count = countChildren(children)
   const [index, setIndexDefault] = useState(0)
 
-  const increment = (): void => {
+  const increment = useCallback(() => {
     if (count === 0) return
     const nextIndex = (index + 1) % count
     setIndexDefault(nextIndex)
-  }
+  }, [index])
 
-  const decrement = (): void => {
+  const decrement = useCallback(() => {
     if (count === 0) return
     const prevIndex = (index - 1 + count) % count
     setIndexDefault(prevIndex)
-  }
+  }, [index])
 
-  const setIndex = (i: number): void => {
-    if (i < 0 || count <= i) {
-      const msg = `${i} is out of index [0,${count})`
-      throw new RangeError(msg)
-    } else {
-      setIndexDefault(i)
-    }
-  }
+  const setIndex = useCallback(
+    (i: number): void => {
+      if (i < 0 || count <= i) {
+        const msg = `${i} is out of index [0,${count})`
+        throw new RangeError(msg)
+      } else {
+        setIndexDefault(i)
+      }
+    },
+    [index]
+  )
 
   const child = children[index]
 
-  return {
-    increment,
-    decrement,
+  return [
     child,
-    setIndex,
-  }
+    {
+      increment,
+      decrement,
+      setIndex,
+    },
+  ]
 }
 
 export default useRotateChildren
