@@ -1,4 +1,4 @@
-import useActivateChild from "./useActivateChild"
+import useCurrentElement from "./useCurrentElement"
 import useRotateChildren from "./useRotateChildren"
 
-export { useActivateChild, useRotateChildren }
+export { useCurrentElement, useRotateChildren }
