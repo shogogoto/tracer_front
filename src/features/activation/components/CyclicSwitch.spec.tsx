@@ -28,7 +28,12 @@ describe("CyclicSwitch", () => {
 
   test("Enterキー入力でも切り替わる", async () => {
     const user = userEvent.setup()
-    render(<CyclicSwitch>{children}</CyclicSwitch>)
+    render(
+      <CyclicSwitch>
+        <div>One</div>
+        <div>Two</div>
+      </CyclicSwitch>
+    )
     const sw = screen.getByTestId("cycle-switch")
     sw.focus()
 

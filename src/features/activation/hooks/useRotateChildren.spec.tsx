@@ -4,30 +4,23 @@ import flattenChildren from "react-flatten-children"
 
 import useRotateChildren, { type ReturnType } from "./useRotateChildren"
 
-describe("useCyclicSwitch", () => {
-  test("not element", () => {
+describe("useRotationChildren", () => {
+  test("one element", () => {
     const e = "string"
     const { result } = renderHook(() => useRotateChildren(e))
 
-    expect(result.current.child).toBeNull()
+    expect(result.current.child).toBe(e)
     inc(result.current)
-    expect(result.current.child).toBeNull()
+    expect(result.current.child).toBe(e)
+    inc(result.current)
+    expect(result.current.child).toBe(e)
     dec(result.current)
-    expect(result.current.child).toBeNull()
+    expect(result.current.child).toBe(e)
+    dec(result.current)
+    expect(result.current.child).toBe(e)
   })
 
-  test("no children", () => {
-    const e = <div></div>
-    const { result } = renderHook(() => useRotateChildren(e))
-
-    expect(result.current.child).toBeNull()
-    inc(result.current)
-    expect(result.current.child).toBeNull()
-    dec(result.current)
-    expect(result.current.child).toBeNull()
-  })
-
-  test("3 children", () => {
+  test("3 elements", () => {
     const { result } = renderHook(() => useRotateChildren(e3))
     const children = flattenChildren(e3)
 
@@ -72,11 +65,9 @@ describe("useCyclicSwitch", () => {
 
   const e3 = (
     <>
-      <>
-        <p>1</p>
-        <p>2</p>
-        <p>3</p>
-      </>
+      <p>1</p>
+      <p>2</p>
+      <p>3</p>
     </>
   )
 

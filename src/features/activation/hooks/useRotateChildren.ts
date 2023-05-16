@@ -1,8 +1,10 @@
-import { isValidElement, useState } from "react"
+import { useState } from "react"
 import type { ReactNode, Dispatch } from "react"
 import flattenChildren from "react-flatten-children"
-
+import * as ReactIs from "react-is"
 import { countChildren } from "./funcs"
+
+import { type Rotatable } from "../types"
 
 export type ReturnType = {
   increment: () => void
@@ -11,9 +13,18 @@ export type ReturnType = {
   setIndex: Dispatch<number>
 }
 
-// 子要素の表示を切り替える
-const useRotateChildren = (n: ReactNode): ReturnType => {
-  const count = countChildren(n)
+// 要素を切り替える
+const useRotateChildren = (n: Rotatable): ReturnType => {
+  let children: ReactNode[] = []
+  if (Array.isArray(n)) {
+    children = n
+  } else if (ReactIs.isFragment(n)) {
+    children = flattenChildren(n)
+  } else {
+    children = [n]
+  }
+
+  const count = countChildren(children)
   const [index, setIndexDefault] = useState(0)
 
   const increment = (): void => {
@@ -37,10 +48,7 @@ const useRotateChildren = (n: ReactNode): ReturnType => {
     }
   }
 
-  let child: ReactNode = null
-  if (isValidElement(n) && count > 0) {
-    child = flattenChildren(n.props.children)[index]
-  }
+  const child = children[index]
 
   return {
     increment,
