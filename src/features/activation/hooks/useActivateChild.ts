@@ -1,22 +1,23 @@
-import { useState } from "react"
-import type { ReactNode, ReactElement } from "react"
+import { useState, useCallback } from "react"
+import type { ReactNode } from "react"
 import flattenChildren from "react-flatten-children"
 import isEqual from "react-fast-compare"
 
 import { indexChild } from "./funcs"
 
-export type ReturnType = {
-  activated: ReactNode
-  activate: (target: ReactElement) => void
+type ReturnFuncs = {
+  activate: (target: ReactNode) => void
   deactivate: () => void
   isActivated: (node: ReactNode) => boolean
 }
+
+export type ReturnType = [activated: ReactNode, funcs: ReturnFuncs]
 
 const useActivateChild = (n: ReactNode): ReturnType => {
   const [activated, setActivated] = useState<ReactNode>(null)
   const children = flattenChildren(n)
 
-  function activate(target: ReactElement): void {
+  const activate = useCallback((target: ReactNode) => {
     const i = indexChild(n, target)
     if (i === -1) {
       const msg = "This is not in the activate target children"
@@ -24,22 +25,27 @@ const useActivateChild = (n: ReactNode): ReturnType => {
     } else {
       setActivated(children[i])
     }
-  }
+  }, [])
 
-  function deactivate(): void {
+  const deactivate = useCallback(() => {
     setActivated(null)
-  }
+  }, [])
 
-  function isActivated(node: ReactNode): boolean {
-    return isEqual(activated, node)
-  }
+  const isActivated = useCallback(
+    (node: ReactNode): boolean => {
+      return isEqual(activated, node)
+    },
+    [activated]
+  )
 
-  return {
+  return [
     activated,
-    activate,
-    deactivate,
-    isActivated,
-  }
+    {
+      activate,
+      deactivate,
+      isActivated,
+    },
+  ]
 }
 
 export default useActivateChild

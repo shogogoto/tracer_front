@@ -17,14 +17,14 @@ describe("useActivateChild", () => {
   test("activate child", () => {
     const children = flattenChildren(e)
     const { result } = renderHook(() => useActivateChild(e))
-    expect(result.current.activated).toBeNull()
+    expect(result.current[0]).toBeNull()
 
     function check(i: number): void {
-      expect(result.current.isActivated(children[i])).toBeFalsy()
+      expect(result.current[1].isActivated(children[i])).toBeFalsy()
       act(() => {
-        result.current.activate(children[i] as ReactElement)
+        result.current[1].activate(children[i] as ReactElement)
       })
-      expect(result.current.isActivated(children[i])).toBeTruthy()
+      expect(result.current[1].isActivated(children[i])).toBeTruthy()
     }
 
     check(0)
@@ -32,9 +32,9 @@ describe("useActivateChild", () => {
     check(2)
 
     act(() => {
-      result.current.deactivate()
+      result.current[1].deactivate()
     })
-    expect(result.current.activated).toBeNull()
+    expect(result.current[0]).toBeNull()
   })
 
   test("activate not child", () => {
@@ -42,7 +42,7 @@ describe("useActivateChild", () => {
     function activate(n: ReactNode) {
       return (): void => {
         act(() => {
-          result.current.activate(n as ReactElement)
+          result.current[1].activate(n as ReactElement)
         })
       }
     }
