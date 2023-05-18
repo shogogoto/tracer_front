@@ -30,8 +30,10 @@
   },
   "include": ["src"],
   "exclude": [
-    "./src/**./*.spec.{ts,tsx}",
-    "./src/**./*.stories.{ts,tsx}"
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/*.stories.ts",
+    "**/*.stories.tsx"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
