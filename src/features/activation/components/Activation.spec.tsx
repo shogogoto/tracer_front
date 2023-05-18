@@ -1,30 +1,13 @@
 import { render } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { forwardRef } from "react"
+import { forwardRef, type MouseEventHandler } from "react"
 
 import Activation from "./Activation"
 
 describe("Activation", () => {
   test("enable style", async () => {
-    const tgt = (
-      <Activation>
-        <TestElement />
-      </Activation>
-    )
-
-    const user = userEvent.setup()
-    const x = render(tgt)
-    const ac = x.getByText("test")
-    expect(ac?.parentElement).toHaveClass("css-0") // emotion
-    await user.click(ac)
-    expect(ac.parentElement).not.toHaveClass("css-0") // emotion
-  })
-
-  // 子をclick
-  test("fire click event of children", async () => {
-    let clicked = false
-    const handleClick = (): void => {
-      clicked = true
+    const handleClick: MouseEventHandler = (e) => {
+      e.stopPropagation()
     }
     const tgt = (
       <Activation>
@@ -34,15 +17,36 @@ describe("Activation", () => {
 
     const user = userEvent.setup()
     const x = render(tgt)
-    const ac = x.getByText("test")
+    const t = x.getByText("test")
+    expect(t.parentElement).toHaveClass("css-0") // emotion
+    await user.click(t.parentElement?.parentElement)
+    expect(t.parentElement).not.toHaveClass("css-0") // emotion
+  })
+
+  // 子をclick
+  test("fire click event of children", async () => {
+    let clicked = false
+    const handleClick: MouseEventHandler = (e) => {
+      e.stopPropagation()
+      clicked = !clicked
+    }
+    const tgt = (
+      <Activation>
+        <TestElement handleClick={handleClick} />
+      </Activation>
+    )
+
+    const user = userEvent.setup()
+    const x = render(tgt)
+    const t = x.getByText("test")
     expect(clicked).toBe(false)
-    await user.click(ac)
+    await user.click(t.parentElement?.parentElement)
     expect(clicked).toBe(true)
   })
 })
 
 type TestProps = {
-  handleClick?: VoidFunction
+  handleClick?: MouseEventHandler
 }
 
 const TestElement = forwardRef<HTMLDivElement, TestProps>((props, ref) => {

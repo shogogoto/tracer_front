@@ -30,29 +30,32 @@ type ReturnType = [State, Func]
 const useActivation = (props: Props): ReturnType => {
   const [fSt, fFn] = useForwardClick(props.children)
   const [sSt, sFn] = useStyle({
-    n: fSt.forwardElements[0],
+    elms: fSt.forwardElements,
     initStyled: props.initStyled ?? false,
     css: cssActivated,
   })
 
   const handleClick: VoidFunction = useCallback(() => {
-    sFn.toggleStyle()
+    console.log("click!")
+    sFn.toggleStyle(0)
     fFn.forwardClick(0)
-  }, [fFn, sFn])
+  }, [sFn, fFn])
 
   const activationElement = useMemo(
-    () => <div onClick={handleClick}>{sSt.styledElement}</div>,
-    [handleClick, sSt.styledElement]
+    () => <div onClick={handleClick}>{sSt.styledElements}</div>,
+    [handleClick, sSt]
   )
 
   return [
     {
       activationElement,
-      isStyled: sSt.isStyled,
+      isStyled: sSt.isStyled[0],
     },
     {
       handleClick,
-      toggleStyle: sFn.toggleStyle,
+      toggleStyle: () => {
+        sFn.toggleStyle(0)
+      },
     },
   ]
 }
