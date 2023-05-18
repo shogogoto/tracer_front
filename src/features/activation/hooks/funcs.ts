@@ -3,7 +3,7 @@ import flattenChildren from "react-flatten-children"
 import isEqual from "react-fast-compare"
 import * as ReactIs from "react-is"
 
-import type { Rotatable } from "../types"
+import type { Activatable, ActivatableChildren, Rotatable } from "../types"
 
 export function countChildren(n: ReactNode): number {
   let count: number = -1
@@ -25,6 +25,16 @@ export const rotatableToArray = (n: Rotatable): ReactNode[] => {
     children = n
   } else if (ReactIs.isFragment(n)) {
     children = flattenChildren(n)
+  } else {
+    children = [n]
+  }
+  return children
+}
+
+export const activatableToArray = (n: ActivatableChildren): Activatable[] => {
+  let children: Activatable[]
+  if (Array.isArray(n)) {
+    children = n
   } else {
     children = [n]
   }
