@@ -1,13 +1,7 @@
 import type { FC } from "react"
-import { css } from "@emotion/react"
 
 import type { Activatable } from "../types"
-import { useForwardClick, useStyle } from "../hooks"
-
-export const cssActivated = css`
-  color: red;
-  border: solid;
-`
+import { useActivation } from "../hooks"
 
 type Props = {
   children: Activatable
@@ -15,20 +9,8 @@ type Props = {
 }
 
 const Activation: FC<Props> = (props) => {
-  const [state, funcs] = useForwardClick(props.children)
-
-  const [st, fns] = useStyle({
-    n: state.forwardElement,
-    initStyled: props.initStyled ?? false,
-    css: cssActivated,
-  })
-
-  const handleClick: VoidFunction = () => {
-    fns.toggleStyle()
-    funcs.forwardClick()
-  }
-
-  return <div onClick={handleClick}>{st.styledElement}</div>
+  const [s] = useActivation(props)
+  return s.activationElement
 }
 
 export default Activation

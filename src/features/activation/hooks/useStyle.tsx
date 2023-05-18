@@ -1,5 +1,4 @@
 import { useState, useCallback } from "react"
-import { css } from "@emotion/react"
 import type { SerializedStyles } from "@emotion/react"
 
 import type { Activatable } from "../types"
@@ -28,7 +27,7 @@ const useStyle = (props: Props): ReturnType => {
     setIsStyled(!isStyled)
   }, [isStyled])
 
-  const styledElement = <div css={isStyled && cssActivated}>{props.n}</div>
+  const styledElement = <div css={isStyled && props.css}>{props.n}</div>
 
   return [
     {
@@ -41,8 +40,4 @@ const useStyle = (props: Props): ReturnType => {
   ]
 }
 
-export const cssActivated = css`
-  color: red;
-  border: solid;
-`
 export default useStyle

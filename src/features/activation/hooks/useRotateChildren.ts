@@ -15,7 +15,6 @@ export type ReturnType = [child: ReactNode, funcs: ReturnFuncs]
 // 要素を切り替える
 const useRotateChildren = (n: Rotatable): ReturnType => {
   const children = rotatableToArray(n)
-
   const count = countChildren(children)
   const [index, setIndexDefault] = useState(0)
 
