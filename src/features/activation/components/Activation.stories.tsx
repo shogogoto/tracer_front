@@ -11,19 +11,15 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const e1 = <div>Activated</div>
-const e2 = <div>Deactivated</div>
-
 export const Activated: Story = {
   args: {
-    children: e1,
-    init: e1,
+    children: <div>Activated</div>,
+    initStyled: true,
   },
 }
 
 export const Deactivated: Story = {
   args: {
-    children: e2,
-    init: e1,
+    children: <div>Deactivated</div>,
   },
 }

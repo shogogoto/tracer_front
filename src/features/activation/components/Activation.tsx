@@ -1,9 +1,8 @@
-import { cloneElement } from "react"
-import type { ReactNode, FC } from "react"
+import type { FC } from "react"
 import { css } from "@emotion/react"
 
 import type { Activatable } from "../types"
-import useActivation from "../hooks/useActivation"
+import { useForwardClick, useStyle } from "../hooks"
 
 export const cssActivated = css`
   color: red;
@@ -12,22 +11,24 @@ export const cssActivated = css`
 
 type Props = {
   children: Activatable
-  action?: VoidFunction
-  init?: ReactNode
+  initStyled?: boolean
 }
 
 const Activation: FC<Props> = (props) => {
-  const [state, funcs] = useActivation(props)
+  const [state, funcs] = useForwardClick(props.children)
 
-  return (
-    <div
-      css={state.isActive && cssActivated}
-      onClick={funcs.handleClick}
-      data-testid="activation"
-    >
-      {cloneElement(props.children, { ref: state.ref })}
-    </div>
-  )
+  const [st, fns] = useStyle({
+    n: state.forwardElement,
+    initStyled: props.initStyled ?? false,
+    css: cssActivated,
+  })
+
+  const handleClick: VoidFunction = () => {
+    fns.toggleStyle()
+    funcs.forwardClick()
+  }
+
+  return <div onClick={handleClick}>{st.styledElement}</div>
 }
 
 export default Activation
