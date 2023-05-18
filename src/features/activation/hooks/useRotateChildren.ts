@@ -22,13 +22,13 @@ const useRotateChildren = (n: Rotatable): ReturnType => {
     if (count === 0) return
     const nextIndex = (index + 1) % count
     setIndexDefault(nextIndex)
-  }, [index])
+  }, [count, index])
 
   const decrement = useCallback(() => {
     if (count === 0) return
     const prevIndex = (index - 1 + count) % count
     setIndexDefault(prevIndex)
-  }, [index])
+  }, [count, index])
 
   const setIndex = useCallback(
     (i: number): void => {
@@ -39,7 +39,7 @@ const useRotateChildren = (n: Rotatable): ReturnType => {
         setIndexDefault(i)
       }
     },
-    [index]
+    [count]
   )
 
   const child = children[index]
