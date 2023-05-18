@@ -1,37 +1,40 @@
-import { useRef, useCallback, cloneElement } from "react"
-import type { ReactElement, RefObject } from "react"
+import { useRef, useCallback, cloneElement, createRef } from "react"
+import type { ReactElement, RefObject, MutableRefObject } from "react"
+import type { Activatables } from "../types"
+import { activatableToArray } from "./funcs"
 
-import type { Activatable } from "../types"
+type Refs = Array<RefObject<HTMLElement>>
 
 type ReturnState = {
-  forwardElement: ReactElement
-  ref: RefObject<HTMLElement>
+  forwardElements: ReactElement[]
+  refs: MutableRefObject<Refs>
 }
 
 type ReturnFunc = {
-  forwardClick: VoidFunction
+  forwardClick: (i: number) => void
 }
 
 type ReturnType = [ReturnState, ReturnFunc]
 
-const useForwardClick = (
-  node: Activatable,
-  preaction: VoidFunction = () => {},
-  postaction: VoidFunction = () => {}
-): ReturnType => {
-  const ref = useRef<HTMLElement>(null)
-  const forwardClick = useCallback(() => {
-    preaction()
-    ref.current?.click()
-    postaction()
+const useForwardClick = (elms: Activatables): ReturnType => {
+  const arr = activatableToArray(elms)
+  const refs = useRef<Refs>([])
+
+  arr.forEach((_, i) => {
+    refs.current[i] = createRef<HTMLElement>()
+  })
+
+  const forwardClick = useCallback((i: number) => {
+    refs.current[i].current?.click()
   }, [])
 
-  const forwardElement = cloneElement(node, { ref })
-
+  const forwardElements = arr.map((elm, i) =>
+    cloneElement(elm, { ref: refs.current[i] })
+  )
   return [
     {
-      forwardElement,
-      ref,
+      forwardElements,
+      refs,
     },
     {
       forwardClick,

@@ -11,24 +11,17 @@ describe("useForwardClick", () => {
       clicked = true
     }
 
-    let flag = false
-    const preaction = (): void => {
-      flag = true
-    }
-
     const { result } = renderHook(() =>
-      useForwardClick(<TestElement handleClick={handleClick} />, preaction)
+      useForwardClick(<TestElement handleClick={handleClick} />)
     )
 
-    render(result.current[0].forwardElement)
+    render(result.current[0].forwardElements[0])
 
     expect(clicked).toBe(false)
-    expect(flag).toBe(false)
     act(() => {
-      result.current[1].forwardClick()
+      result.current[1].forwardClick(0)
     })
     expect(clicked).toBe(true)
-    expect(flag).toBe(true)
   })
 })
 
