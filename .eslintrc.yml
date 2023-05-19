@@ -14,12 +14,13 @@ parserOptions:
   project: ./tsconfig.json
 plugins:
   - react
+  - unused-imports
 ignorePatterns:
   - vite.config.ts
   - vitest.setup.ts
-rules: {
+rules:
   "react/react-in-jsx-scope": "off"
-  , "@typescript-eslint/triple-slash-reference": "off"
-  , "@typescript-eslint/consistent-type-definitions": "off"
-  , "react/no-unknown-property": ["error", { "ignore": ["css"] }]
-}
+  "@typescript-eslint/triple-slash-reference": "off"
+  "@typescript-eslint/consistent-type-definitions": "off"
+  "react/no-unknown-property": ["error", { "ignore": ["css"] }]
+  "unused-imports/no-unused-imports": "error"
