@@ -1,8 +1,9 @@
 import { useState, useCallback } from "react"
-import type { SerializedStyles } from "@emotion/react"
+
+import { activatableToArray } from "./funcs"
 
 import type { Activatable, Activatables } from "../types"
-import { activatableToArray } from "./funcs"
+import type { SerializedStyles } from "@emotion/react"
 
 type State = {
   isStyled: boolean[]

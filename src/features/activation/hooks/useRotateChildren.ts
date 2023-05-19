@@ -1,8 +1,10 @@
 import { useState, useCallback } from "react"
-import type { ReactNode, Dispatch } from "react"
-import { countChildren, rotatableToArray } from "./funcs"
 
 import { type Rotatable } from "../types"
+
+import { countChildren, rotatableToArray } from "./funcs"
+
+import type { ReactNode, Dispatch } from "react"
 
 type State = {
   child: ReactNode

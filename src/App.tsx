@@ -1,4 +1,5 @@
 import { type FC } from "react"
+
 import "./App.css"
 import { AppProvider } from "@/providers"
 import { AppRoutes } from "@/routes"

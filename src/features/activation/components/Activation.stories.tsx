@@ -1,6 +1,18 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import { useActivation } from "../hooks"
 
-import Activation from "./Activation"
+import type { Activatable } from "../types"
+import type { Meta, StoryObj } from "@storybook/react"
+import type { FC } from "react"
+
+type Props = {
+  children: Activatable
+  initStyled?: boolean
+}
+
+const Activation: FC<Props> = (props) => {
+  const [s] = useActivation(props)
+  return s.activationElement
+}
 
 const meta = {
   title: "Activation",

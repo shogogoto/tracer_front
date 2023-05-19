@@ -1,17 +1,26 @@
 import { useRef, useCallback, cloneElement, createRef } from "react"
-import type { ReactElement, RefObject, MutableRefObject } from "react"
-import type { Activatables } from "../types"
+
 import { activatableToArray } from "./funcs"
+
+import type { Activatables } from "../types"
+import type {
+  ReactNode,
+  ReactElement,
+  RefObject,
+  MutableRefObject,
+} from "react"
 
 type Refs = Array<RefObject<HTMLElement>>
 
 type ReturnState = {
   forwardElements: ReactElement[]
   refs: MutableRefObject<Refs>
+  lastClicked: ReactNode
 }
 
 type ReturnFunc = {
   forwardClick: (i: number) => void
+  clickedIndex: (e: MouseEvent) => number
 }
 
 type ReturnType = [ReturnState, ReturnFunc]
@@ -28,6 +37,10 @@ const useForwardClick = (elms: Activatables): ReturnType => {
     refs.current[i].current?.click()
   }, [])
 
+  const clickedIndex = useCallback((e: MouseEvent) => {
+    return 1
+  }, [])
+
   const forwardElements = arr.map((elm, i) =>
     cloneElement(elm, { ref: refs.current[i] })
   )
@@ -38,6 +51,7 @@ const useForwardClick = (elms: Activatables): ReturnType => {
     },
     {
       forwardClick,
+      clickedIndex,
     },
   ]
 }

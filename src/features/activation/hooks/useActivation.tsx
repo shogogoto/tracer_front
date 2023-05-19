@@ -1,9 +1,10 @@
 import { css } from "@emotion/react"
-import type { ReactElement } from "react"
 import { useMemo, useCallback } from "react"
 
-import type { Activatable } from "../types"
-import { useForwardClick, useStyle } from "../hooks"
+import { useForwardClick, useStyle, useRotateChildren } from "../hooks"
+
+import type { Activatables } from "../types"
+import type { MouseEventHandler, ReactElement } from "react"
 
 export const cssActivated = css`
   color: red;
@@ -11,7 +12,7 @@ export const cssActivated = css`
 `
 
 type Props = {
-  children: Activatable
+  children: Activatables
   initStyled?: boolean
 }
 
@@ -34,11 +35,16 @@ const useActivation = (props: Props): ReturnType => {
     initStyled: props.initStyled ?? false,
     css: cssActivated,
   })
+  const [rSt] = useRotateChildren(sSt.styledElements)
 
-  const handleClick: VoidFunction = useCallback(() => {
-    sFn.toggleStyle(0)
-    fFn.forwardClick(0)
-  }, [sFn, fFn])
+  const handleClick: MouseEventHandler = useCallback(
+    (e) => {
+      // console.log(e.target)
+      sFn.toggleStyle(rSt.index)
+      fFn.forwardClick(rSt.index)
+    },
+    [sFn, fFn, rSt]
+  )
 
   const activationElement = useMemo(
     () => <div onClick={handleClick}>{sSt.styledElements}</div>,

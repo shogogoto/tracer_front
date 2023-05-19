@@ -1,7 +1,8 @@
 import { useState, useCallback } from "react"
-import type { ReactNode } from "react"
 import isEqual from "react-fast-compare"
 import * as ReactIs from "react-is"
+
+import type { ReactNode } from "react"
 
 type ReturnFuncs = {
   set: (target: ReactNode) => void

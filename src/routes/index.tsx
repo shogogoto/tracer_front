@@ -1,5 +1,6 @@
-import { useRoutes } from "react-router-dom"
 import { type FC } from "react"
+import { useRoutes } from "react-router-dom"
+
 import { ConceptRoutes } from "@/features/concept/routes"
 
 const routes = [

@@ -1,6 +1,6 @@
 import { Children, type ReactNode, isValidElement } from "react"
-import flattenChildren from "react-flatten-children"
 import isEqual from "react-fast-compare"
+import flattenChildren from "react-flatten-children"
 import * as ReactIs from "react-is"
 
 import type { Activatable, Activatables, Rotatable } from "../types"
