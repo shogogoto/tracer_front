@@ -22,7 +22,7 @@ type State = {
 }
 
 type Func = {
-  handleClick: VoidFunction
+  handleClick: MouseEventHandler
   toggleStyle: VoidFunction
 }
 
