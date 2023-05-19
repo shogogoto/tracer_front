@@ -19,9 +19,7 @@ describe("Activation", () => {
     const x = render(tgt)
     const t = x.getByText("test")
     expect(t.parentElement).toHaveClass("css-0") // emotion
-    await user.click(
-      (t.parentElement as HTMLElement).parentElement as HTMLElement
-    )
+    await user.click(t.parentElement.parentElement)
     expect(t.parentElement).not.toHaveClass("css-0") // emotion
   })
 
@@ -42,9 +40,7 @@ describe("Activation", () => {
     const x = render(tgt)
     const t = x.getByText("test")
     expect(clicked).toBe(false)
-    await user.click(
-      (t.parentElement as HTMLElement).parentElement as HTMLElement
-    )
+    await user.click(t.parentElement.parentElement)
     expect(clicked).toBe(true)
   })
 })
