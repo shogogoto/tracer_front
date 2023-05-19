@@ -8,15 +8,15 @@ type Props = {
 }
 
 const CyclicSwitch: FC<Props> = (props) => {
-  const [child, funcs] = useRotateChildren(props.children)
-  useKey("Enter", funcs.increment, {}, [child])
+  const [st, fn] = useRotateChildren(props.children)
+  useKey("Enter", fn.increment, {}, [st.child])
 
   return (
     <div
-      onClick={funcs.increment}
+      onClick={fn.increment}
       data-testid="cycle-switch"
     >
-      {child}
+      {st.child}
     </div>
   )
 }

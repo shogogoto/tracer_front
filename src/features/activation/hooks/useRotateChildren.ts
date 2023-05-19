@@ -4,13 +4,18 @@ import { countChildren, rotatableToArray } from "./funcs"
 
 import { type Rotatable } from "../types"
 
+type State = {
+  child: ReactNode
+  index: number
+}
+
 type ReturnFuncs = {
   increment: () => void
   decrement: () => void
   setIndex: Dispatch<number>
 }
 
-export type ReturnType = [child: ReactNode, funcs: ReturnFuncs]
+export type ReturnType = [State, ReturnFuncs]
 
 // 要素を切り替える
 const useRotateChildren = (n: Rotatable): ReturnType => {
@@ -45,7 +50,10 @@ const useRotateChildren = (n: Rotatable): ReturnType => {
   const child = children[index]
 
   return [
-    child,
+    {
+      child,
+      index,
+    },
     {
       increment,
       decrement,

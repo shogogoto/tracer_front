@@ -36,7 +36,6 @@ const useActivation = (props: Props): ReturnType => {
   })
 
   const handleClick: VoidFunction = useCallback(() => {
-    console.log("click!")
     sFn.toggleStyle(0)
     fFn.forwardClick(0)
   }, [sFn, fFn])
