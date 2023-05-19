@@ -15,6 +15,7 @@ parserOptions:
 plugins:
   - react
   - unused-imports
+  - import
 ignorePatterns:
   - vite.config.ts
   - vitest.setup.ts
@@ -24,3 +25,20 @@ rules:
   "@typescript-eslint/consistent-type-definitions": "off"
   "react/no-unknown-property": ["error", { "ignore": ["css"] }]
   "unused-imports/no-unused-imports": "error"
+  import/order:
+    - error
+    - groups:
+        - builtin
+        - external
+        - internal
+        - parent
+        - sibling
+        - object
+        - type
+        - index
+      newlines-between: always
+      pathGroupsExcludedImportTypes:
+        - builtin
+      alphabetize:
+        order: asc
+        caseInsensitive: true
