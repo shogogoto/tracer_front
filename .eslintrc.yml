@@ -16,7 +16,6 @@ plugins:
   - react
   - unused-imports
   - import
-  - import-newlines
 ignorePatterns:
   - vite.config.ts
   - vitest.setup.ts
