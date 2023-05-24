@@ -1,10 +1,11 @@
 import { useState, useCallback } from "react"
+import isEqual from "react-fast-compare"
 
 import { type Rotatable } from "../types"
 
 import { countChildren, rotatableToArray } from "./funcs"
 
-import type { ReactNode, Dispatch } from "react"
+import type { ReactNode } from "react"
 
 type State = {
   child: ReactNode
@@ -14,7 +15,7 @@ type State = {
 type ReturnFuncs = {
   increment: () => void
   decrement: () => void
-  setIndex: Dispatch<number>
+  setChild: (n: ReactNode) => void
 }
 
 export type ReturnType = [State, ReturnFuncs]
@@ -37,7 +38,7 @@ const useRotateChildren = (n: Rotatable): ReturnType => {
     setIndexDefault(prevIndex)
   }, [count, index])
 
-  const setIndex = useCallback(
+  const _setIndex = useCallback(
     (i: number): void => {
       if (i < 0 || count <= i) {
         const msg = `${i} is out of index [0,${count})`
@@ -47,6 +48,14 @@ const useRotateChildren = (n: Rotatable): ReturnType => {
       }
     },
     [count]
+  )
+
+  const setChild = useCallback(
+    (child: ReactNode) => {
+      const i = children.findIndex((e) => isEqual(e, child))
+      _setIndex(i)
+    },
+    [children, _setIndex]
   )
 
   const child = children[index]
@@ -59,7 +68,7 @@ const useRotateChildren = (n: Rotatable): ReturnType => {
     {
       increment,
       decrement,
-      setIndex,
+      setChild,
     },
   ]
 }

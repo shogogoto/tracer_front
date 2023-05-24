@@ -1,8 +1,10 @@
+import React from "react"
 import { renderHook } from "@testing-library/react"
 import { act } from "react-dom/test-utils"
 import flattenChildren from "react-flatten-children"
 
 import useRotateChildren, { type ReturnType } from "./useRotateChildren"
+import { rotatableToArray } from "./funcs"
 
 describe("useRotationChildren", () => {
   test("one element", () => {
@@ -41,20 +43,26 @@ describe("useRotationChildren", () => {
     expect(result.current[0].child).toEqual(children[2])
   })
 
-  test("set index by direct", () => {
-    const { result } = renderHook(() => useRotateChildren(e3))
-    const children = flattenChildren(e3)
+  test("set index by child", () => {
+    const children = rotatableToArray(e3)
+    const { result } = renderHook(() => useRotateChildren(children))
     function setIndex(i: number): void {
       act(() => {
         result.current[1].setIndex(i)
       })
     }
 
-    setIndex(0)
+    function setChild(i: number): void {
+      act(() => {
+        result.current[1].setChild(children[i])
+      })
+    }
+
+    setChild(0)
     expect(result.current[0].child).toEqual(children[0])
-    setIndex(2)
+    setChild(2)
     expect(result.current[0].child).toEqual(children[2])
-    setIndex(1)
+    setChild(1)
     expect(result.current[0].child).toEqual(children[1])
 
     expect(() => {
@@ -70,6 +78,7 @@ describe("useRotationChildren", () => {
       <p>3</p>
     </>
   )
+  const children = flattenChildren(e3)
 
   function inc(ret: ReturnType): void {
     act(() => {
