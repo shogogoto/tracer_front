@@ -45,3 +45,8 @@ rules:
         caseInsensitive: true
   import-newlines/enforce:
     - error
+    -
+      items: 2
+      semi: false
+  indent:
+      - 1
