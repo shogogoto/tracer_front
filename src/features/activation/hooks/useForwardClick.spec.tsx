@@ -1,3 +1,4 @@
+import React from "react"
 import { render, renderHook } from "@testing-library/react"
 import { forwardRef } from "react"
 import type { MouseEventHandler } from "react"
@@ -33,7 +34,18 @@ describe("useForwardClick", () => {
       return <TestElement handleClick={handleClick} />
     })
 
+    console.log("################################### clicked index")
+    console.log(elms)
     const { result } = renderHook(() => useForwardClick(elms))
+    render(<div>{result.current[0].forwardElements}</div>)
+    act(() => {
+      result.current[1].forwardClick(0)
+    })
+    console.log(result.current[1].latestClicked())
+    act(() => {
+      result.current[1].forwardClick(1)
+    })
+    console.log(result.current[1].latestClicked())
   })
 })
 
