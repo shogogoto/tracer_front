@@ -26,6 +26,13 @@ rules:
   "@typescript-eslint/consistent-type-definitions": "off"
   "react/no-unknown-property": ["error", { "ignore": ["css"] }]
   "unused-imports/no-unused-imports": "error"
+  import-newlines/enforce:
+    - error
+    -
+      items: 2
+      semi: false
+  indent:
+      - 1
   import/order:
     - error
     - groups:
@@ -43,10 +50,3 @@ rules:
       alphabetize:
         order: asc
         caseInsensitive: true
-  import-newlines/enforce:
-    - error
-    -
-      items: 2
-      semi: false
-  indent:
-      - 1
