@@ -1,10 +1,9 @@
 import { useState, useCallback } from "react"
 import isEqual from "react-fast-compare"
 
-import { type Rotatable } from "../types"
-
 import { countChildren, rotatableToArray } from "./funcs"
 
+import type { Rotatable } from "../types"
 import type { ReactNode } from "react"
 
 type State = {
