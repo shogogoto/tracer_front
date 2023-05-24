@@ -16,6 +16,7 @@ plugins:
   - react
   - unused-imports
   - import
+  - import-newlines
 ignorePatterns:
   - vite.config.ts
   - vitest.setup.ts
@@ -42,3 +43,5 @@ rules:
       alphabetize:
         order: asc
         caseInsensitive: true
+  import-newlines/enforce:
+    - error
