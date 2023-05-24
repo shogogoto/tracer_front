@@ -3,7 +3,7 @@ import { act } from "react-dom/test-utils"
 import flattenChildren from "react-flatten-children"
 import type { ReactNode, ReactElement } from "react"
 
-import useCurrentElement from "./useCurrentElement"
+import { useCurrentNode } from "../hooks"
 
 const e = (
   <>
@@ -13,10 +13,10 @@ const e = (
   </>
 )
 
-describe("useCuremntElement", () => {
+describe("useCurrentNode", () => {
   test("set/unset element", () => {
     const children = flattenChildren(e)
-    const { result } = renderHook(() => useCurrentElement(null))
+    const { result } = renderHook(() => useCurrentNode(null))
     expect(result.current[0]).toBeNull()
 
     function check(i: number): void {
@@ -38,7 +38,7 @@ describe("useCuremntElement", () => {
   })
 
   test("set not element", () => {
-    const { result } = renderHook(() => useCurrentElement(e))
+    const { result } = renderHook(() => useCurrentNode(e))
     function activate(n: ReactNode) {
       return (): void => {
         act(() => {

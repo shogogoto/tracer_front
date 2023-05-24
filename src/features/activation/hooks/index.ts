@@ -1,11 +1,11 @@
 import useActivation from "./useActivation"
-import useCurrentElement from "./useCurrentElement"
+import useCurrentNode from "./useCurrentNode"
 import useForwardClick from "./useForwardClick"
 import useRotateChildren from "./useRotateChildren"
 import useStyle from "./useStyle"
 
 export {
-  useCurrentElement,
+  useCurrentNode,
   useRotateChildren,
   useForwardClick,
   useStyle,

@@ -12,12 +12,12 @@ type ReturnFuncs = {
 
 export type ReturnType = [node: ReactNode, funcs: ReturnFuncs]
 
-const useCurrentElement = (init: ReactNode): ReturnType => {
-  const [node, setNode] = useState<ReactNode>(init)
+const useCurrentNode = (init: ReactNode): ReturnType => {
+  const [current, setCurrent] = useState<ReactNode>(init)
 
   const set = useCallback((target: ReactNode) => {
     if (ReactIs.isElement(target)) {
-      setNode(target)
+      setCurrent(target)
     } else {
       const msg = "You shouhd set element to current node"
       throw new RangeError(msg)
@@ -25,16 +25,16 @@ const useCurrentElement = (init: ReactNode): ReturnType => {
   }, [])
 
   const unset = useCallback(() => {
-    setNode(null)
+    setCurrent(null)
   }, [])
 
   const isCurrent = useCallback(
-    (n: ReactNode): boolean => isEqual(node, n),
-    [node]
+    (n: ReactNode): boolean => isEqual(current, n),
+    [current]
   )
 
   return [
-    node,
+    current,
     {
       set,
       unset,
@@ -43,4 +43,4 @@ const useCurrentElement = (init: ReactNode): ReturnType => {
   ]
 }
 
-export default useCurrentElement
+export default useCurrentNode
