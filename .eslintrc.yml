@@ -26,12 +26,6 @@ rules:
   "@typescript-eslint/consistent-type-definitions": "off"
   "react/no-unknown-property": ["error", { "ignore": ["css"] }]
   "unused-imports/no-unused-imports": "error"
-  import-newlines/enforce:
-    - error
-    -
-      items: 2
-      semi: false
-      forceSingleLine: false
   indent:
       - 1
   import/order:
