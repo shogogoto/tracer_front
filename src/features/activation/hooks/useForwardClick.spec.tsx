@@ -3,6 +3,8 @@ import { render, renderHook } from "@testing-library/react"
 import { forwardRef } from "react"
 import type { MouseEventHandler } from "react"
 import { act } from "react-dom/test-utils"
+import { screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 
 import { useForwardClick } from "."
 
@@ -17,7 +19,7 @@ describe("useForwardClick", () => {
       useForwardClick(<TestElement handleClick={handleClick} />)
     )
 
-    render(result.current[0].forwardElements[0])
+    render(result.current[0].elements[0])
 
     expect(clicked).toBe(false)
     act(() => {
@@ -25,32 +27,11 @@ describe("useForwardClick", () => {
     })
     expect(clicked).toBe(true)
   })
-
-  test("clicked index", async () => {
-    const elms = [...Array(3)].map((_, i) => {
-      const handleClick: MouseEventHandler = (e) => {
-        console.log(`clicked ${i}`)
-      }
-      return <TestElement handleClick={handleClick} />
-    })
-
-    console.log("################################### clicked index")
-    console.log(elms)
-    const { result } = renderHook(() => useForwardClick(elms))
-    render(<div>{result.current[0].forwardElements}</div>)
-    act(() => {
-      result.current[1].forwardClick(0)
-    })
-    console.log(result.current[1].latestClicked())
-    act(() => {
-      result.current[1].forwardClick(1)
-    })
-    console.log(result.current[1].latestClicked())
-  })
 })
 
 type TestProps = {
   handleClick: MouseEventHandler
+  text?: string
 }
 
 const TestElement = forwardRef<HTMLDivElement, TestProps>((props, ref) => {
@@ -59,7 +40,7 @@ const TestElement = forwardRef<HTMLDivElement, TestProps>((props, ref) => {
       onClick={props.handleClick}
       ref={ref}
     >
-      test
+      {props.text || "test"}
     </div>
   )
 })

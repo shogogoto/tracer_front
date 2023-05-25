@@ -1,72 +1,46 @@
-import { useRef, useCallback, cloneElement, createRef, useState } from "react"
+import { useRef, useCallback, cloneElement, createRef } from "react"
 
 import { activatableToArray } from "./funcs"
 
-import type { Activatable, Activatables } from "../types"
-import type {
-  ReactElement,
-  RefObject,
-  MutableRefObject,
-  ReactNode,
-} from "react"
+import type { Activatables } from "../types"
+import type { ReactElement, RefObject, MutableRefObject } from "react"
 
 type Refs = Array<RefObject<HTMLElement>>
 
-type ReturnState = {
-  forwardElements: ReactElement[]
+type State = {
+  elements: ReactElement[]
   refs: MutableRefObject<Refs>
-  // lastClicked: ReactNode
 }
 
-type ReturnFunc = {
+type Func = {
   forwardClick: (i: number) => void
-  latestClicked: (e: MouseEvent) => Activatable | null
 }
 
-type ReturnType = [ReturnState, ReturnFunc]
+type ReturnType = [State, Func]
 
 const useForwardClick = (elms: Activatables): ReturnType => {
   const arr = activatableToArray(elms)
   const refs = useRef<Refs>([])
-  const [latest, setLatest] = useState<ReactNode>(null)
 
   arr.forEach((_, i) => {
     refs.current[i] = createRef<HTMLElement>()
   })
 
-  const forwardClick = useCallback(
-    (i: number) => {
-      setLatest(arr[i])
-      refs.current[i].current?.click()
-    },
-    [arr]
-  )
+  const forwardClick = useCallback((i: number) => {
+    refs.current[i].current?.click()
+  }, [])
 
-  const latestClicked = useCallback(
-    (e: MouseEvent) => {
-      // console.log(latest)
-      return arr[0]
-      // return arr.filter((_,i) => {
-      //   console.log("filter", latest)
-      //   // console.log(refs.current[i].current)
-      //   // return refs.current[i].current === e.target
-      //   return null
-      // })
-    },
-    [latest]
-  )
-
-  const forwardElements = arr.map((elm, i) =>
+  const elements = arr.map((elm, i) =>
     cloneElement(elm, { ref: refs.current[i] })
   )
+
   return [
     {
-      forwardElements,
+      elements,
       refs,
     },
     {
       forwardClick,
-      latestClicked,
     },
   ]
 }
