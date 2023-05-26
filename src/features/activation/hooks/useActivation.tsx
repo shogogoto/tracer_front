@@ -1,6 +1,5 @@
 import { css } from "@emotion/react"
 import { useMemo, useCallback } from "react"
-import { useKey } from "react-use"
 
 import { useForwardClick, useStyle, useRotateChildren } from "../hooks"
 
@@ -26,6 +25,7 @@ type Func = {
   handleClick: MouseEventHandler
   increment: VoidFunction
   decrement: VoidFunction
+  clear: VoidFunction
 }
 
 type ReturnType = [State, Func]
@@ -46,33 +46,44 @@ const useActivation = (props: Props): ReturnType => {
     )
   }, [])
 
-  const handleClick: MouseEventHandler = useCallback(
-    (e) => {
-      const next = _clickedIndex(e)
+  const _toggleStyle = useCallback(
+    (next: Index) => {
       rFn.setIndex((prev) => {
         sFn.toggleStyle(prev)
         sFn.toggleStyle(next)
-        fFn.forwardClick(next)
+        typeof next === "number" && fFn.forwardClick(next)
         return next
       })
     },
-    [fFn, rFn, sFn, _clickedIndex]
+    [sFn, fFn, rFn]
+  )
+
+  const handleClick: MouseEventHandler = useCallback(
+    (ev) => {
+      const next = _clickedIndex(ev)
+      _toggleStyle(next)
+    },
+    [_clickedIndex, _toggleStyle]
   )
 
   const increment = useCallback(() => {
     const next = rFn.incremental(rSt.index)
-    rFn.setIndex((prev: Index) => {
-      sFn.toggleStyle(prev)
-      sFn.toggleStyle(next)
-      return next
-    })
-  }, [rFn, sFn, rSt])
+    _toggleStyle(next)
+  }, [rFn, rSt, _toggleStyle])
 
   const decrement = useCallback(() => {
-    rFn.decrement()
-  }, [rFn])
+    const next = rFn.decremental(rSt.index)
+    _toggleStyle(next)
+  }, [rFn, rSt, _toggleStyle])
 
-  useKey("{enter}", increment)
+  const clear = useCallback(() => {
+    const next = null
+    rFn.setIndex((prev: Index) => {
+      sFn.toggleStyle(prev)
+      return next
+    })
+  }, [rFn, sFn])
+
   const wrapped = useMemo(
     () => <div onClick={handleClick}>{sSt.elements}</div>,
     [handleClick, sSt]
@@ -87,6 +98,7 @@ const useActivation = (props: Props): ReturnType => {
       handleClick,
       increment,
       decrement,
+      clear,
     },
   ]
 }

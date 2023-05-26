@@ -72,16 +72,15 @@ describe("Activation", () => {
     assertClick(0)
     await user.click(r.getByText("1"))
     assertClick(1)
+    act(() => result.current[1].clear())
+    assertStyle(result.current[0].isStyled, 999) // nothing styled
+    await user.click(r.getByText("2"))
+    assertClick(2)
   })
 
-  test("style by hook", async () => {
+  test("style by increment", async () => {
     const e = [...Array(3)].map((_, i) => <TestChild text={`${i}`} />)
-
-    const { result, rerender } = renderHook(() =>
-      useActivation({ children: e })
-    )
-    const r = render(<Activation>{e}</Activation>)
-    const user = userEvent.setup()
+    const { result } = renderHook(() => useActivation({ children: e }))
     const inc = () => {
       act(() => {
         result.current[1].increment()
@@ -97,5 +96,33 @@ describe("Activation", () => {
     assertStyle(result.current[0].isStyled, 2)
     inc()
     assertStyle(result.current[0].isStyled, 0)
+    act(() => result.current[1].clear())
+    assertStyle(result.current[0].isStyled, 999) // nothing styled
+    inc()
+    assertStyle(result.current[0].isStyled, 0)
+  })
+
+  test("style by decrement", async () => {
+    const e = [...Array(3)].map((_, i) => <TestChild text={`${i}`} />)
+    const { result } = renderHook(() => useActivation({ children: e }))
+    const dec = () => {
+      act(() => {
+        result.current[1].decrement()
+      })
+    }
+
+    assertStyle(result.current[0].isStyled, 999) // nothing styled
+    dec()
+    assertStyle(result.current[0].isStyled, 2)
+    dec()
+    assertStyle(result.current[0].isStyled, 1)
+    dec()
+    assertStyle(result.current[0].isStyled, 0)
+    dec()
+    assertStyle(result.current[0].isStyled, 2)
+    act(() => result.current[1].clear())
+    assertStyle(result.current[0].isStyled, 999) // nothing styled
+    dec()
+    assertStyle(result.current[0].isStyled, 2)
   })
 })
