@@ -1,10 +1,11 @@
 import { css } from "@emotion/react"
 import { useMemo, useCallback } from "react"
+import { useKey } from "react-use"
 
 import { useForwardClick, useStyle, useRotateChildren } from "../hooks"
 
-import type { Activatables } from "../types"
-import type { MouseEventHandler, ReactElement } from "react"
+import type { Activatables, Index } from "../types"
+import type { MouseEventHandler, ReactElement, MouseEvent } from "react"
 
 export const cssActivated = css`
   color: red;
@@ -17,50 +18,75 @@ type Props = {
 }
 
 type State = {
-  activationElement: ReactElement
-  isStyled: boolean
+  wrapped: ReactElement
+  isStyled: boolean[]
 }
 
 type Func = {
   handleClick: MouseEventHandler
-  toggleStyle: VoidFunction
+  increment: VoidFunction
+  decrement: VoidFunction
 }
 
 type ReturnType = [State, Func]
 
 const useActivation = (props: Props): ReturnType => {
-  const [fSt, fFn] = useForwardClick(props.children)
   const [sSt, sFn] = useStyle({
-    elms: fSt.forwardElements,
+    elms: props.children,
     initStyled: props.initStyled ?? false,
     css: cssActivated,
   })
-  const [rSt] = useRotateChildren(sSt.styledElements)
+  const [, fFn] = useForwardClick(sSt.elements)
+  const [rSt, rFn] = useRotateChildren(sSt.elements, null)
+
+  const _clickedIndex = useCallback((ev: MouseEvent): number => {
+    const nodes = ev.currentTarget.childNodes
+    return Array.from(nodes).findIndex((e) =>
+      e.contains(ev.target as ChildNode)
+    )
+  }, [])
 
   const handleClick: MouseEventHandler = useCallback(
     (e) => {
-      // console.log(e.target)
-      sFn.toggleStyle(rSt.index)
-      fFn.forwardClick(rSt.index)
+      const next = _clickedIndex(e)
+      rFn.setIndex((prev) => {
+        sFn.toggleStyle(prev)
+        sFn.toggleStyle(next)
+        fFn.forwardClick(next)
+        return next
+      })
     },
-    [sFn, fFn, rSt]
+    [fFn, rFn, sFn, _clickedIndex]
   )
 
-  const activationElement = useMemo(
-    () => <div onClick={handleClick}>{sSt.styledElements}</div>,
+  const increment = useCallback(() => {
+    const next = rFn.incremental(rSt.index)
+    rFn.setIndex((prev: Index) => {
+      sFn.toggleStyle(prev)
+      sFn.toggleStyle(next)
+      return next
+    })
+  }, [rFn, sFn, rSt])
+
+  const decrement = useCallback(() => {
+    rFn.decrement()
+  }, [rFn])
+
+  useKey("{enter}", increment)
+  const wrapped = useMemo(
+    () => <div onClick={handleClick}>{sSt.elements}</div>,
     [handleClick, sSt]
   )
 
   return [
     {
-      activationElement,
-      isStyled: sSt.isStyled[0],
+      wrapped,
+      isStyled: sSt.isStyled,
     },
     {
       handleClick,
-      toggleStyle: () => {
-        sFn.toggleStyle(0)
-      },
+      increment,
+      decrement,
     },
   ]
 }

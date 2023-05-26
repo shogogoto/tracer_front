@@ -2,22 +2,24 @@ import { useState, useCallback } from "react"
 
 import { activatableToArray } from "./funcs"
 
-import type { Activatable, Activatables } from "../types"
+import type { Activatables } from "../types"
 import type { SerializedStyles } from "@emotion/react"
 
 type State = {
   isStyled: boolean[]
-  styledElements: Activatables
+  elements: Activatables
 }
 
+type Index = number | null | undefined
+
 type Func = {
-  toggleStyle: (i: number) => void
+  toggleStyle: (i: Index) => void
 }
 
 type ReturnType = [State, Func]
 
 type Props = {
-  elms: Activatable[]
+  elms: Activatables
   initStyled: boolean
   css: SerializedStyles
 }
@@ -28,11 +30,14 @@ const useStyle = (props: Props): ReturnType => {
     Array(arr.length).fill(props.initStyled)
   )
 
-  const toggleStyle = useCallback((i: number) => {
+  const toggleStyle = useCallback((i: Index) => {
+    if (!Number.isInteger(i)) {
+      return
+    }
     setIsStyled((prev) => prev.map((e, j) => (j === i ? !e : e)))
   }, [])
 
-  const styledElements = arr.map((elm, i) => (
+  const elements = arr.map((elm, i) => (
     <div
       key={i}
       css={isStyled[i] && props.css}
@@ -43,7 +48,7 @@ const useStyle = (props: Props): ReturnType => {
   return [
     {
       isStyled,
-      styledElements,
+      elements,
     },
     {
       toggleStyle,

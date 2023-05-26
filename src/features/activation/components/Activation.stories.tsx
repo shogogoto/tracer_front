@@ -11,7 +11,7 @@ type Props = {
 
 const Activation: FC<Props> = (props) => {
   const [s] = useActivation(props)
-  return s.activationElement
+  return s.wrapped
 }
 
 const meta = {

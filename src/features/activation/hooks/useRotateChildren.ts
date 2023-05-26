@@ -30,19 +30,20 @@ const useRotateChildren = (n: Rotatable, initIndex: Index = 0): ReturnType => {
 
   const incremental = useCallback(
     (i: Index): Index => {
-      return i === null ? null : ((i ?? 0) + 1) % count
+      return i === null ? 0 : ((i ?? 0) + 1) % count
     },
     [count]
   )
 
   const decremental = useCallback(
     (i: Index): Index => {
-      return i === null ? null : ((i ?? 0) - 1 + count) % count
+      const last = count - 1
+      return i === null ? last : ((i ?? 0) - 1 + count) % count
     },
     [count]
   )
 
-  const increment = useCallback((): void => {
+  const increment = useCallback(() => {
     if (count === 0) return
     setIndexDefault(incremental(index))
   }, [count, index, incremental])
