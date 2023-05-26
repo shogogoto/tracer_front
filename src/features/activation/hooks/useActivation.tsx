@@ -19,6 +19,7 @@ type Props = {
 type State = {
   wrapped: ReactElement
   isStyled: boolean[]
+  isActive: boolean
 }
 
 type Func = {
@@ -78,11 +79,10 @@ const useActivation = (props: Props): ReturnType => {
 
   const clear = useCallback(() => {
     const next = null
-    rFn.setIndex((prev: Index) => {
-      sFn.toggleStyle(prev)
-      return next
-    })
-  }, [rFn, sFn])
+    _toggleStyle(next)
+  }, [_toggleStyle])
+
+  const isActive = sSt.isStyled.some((e) => e)
 
   const wrapped = useMemo(
     () => <div onClick={handleClick}>{sSt.elements}</div>,
@@ -93,6 +93,7 @@ const useActivation = (props: Props): ReturnType => {
     {
       wrapped,
       isStyled: sSt.isStyled,
+      isActive,
     },
     {
       handleClick,

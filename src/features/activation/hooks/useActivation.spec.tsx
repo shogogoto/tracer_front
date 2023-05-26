@@ -34,6 +34,7 @@ const Activation: FC<Props> = (props) => {
   const [s] = useActivation(props)
   return s.wrapped
 }
+const e = [...Array(3)].map((_, i) => <TestChild text={`${i}`} />)
 
 describe("Activation", () => {
   function assertStyle(actual: boolean[], i: number): void {
@@ -42,8 +43,6 @@ describe("Activation", () => {
   }
 
   test("style by click", async () => {
-    const e = [...Array(3)].map((_, i) => <TestChild text={`${i}`} />)
-
     const { result } = renderHook(() => useActivation({ children: e }))
     const r = render(<Activation>{e}</Activation>)
     const user = userEvent.setup()
@@ -79,7 +78,6 @@ describe("Activation", () => {
   })
 
   test("style by increment", async () => {
-    const e = [...Array(3)].map((_, i) => <TestChild text={`${i}`} />)
     const { result } = renderHook(() => useActivation({ children: e }))
     const inc = () => {
       act(() => {
@@ -103,7 +101,6 @@ describe("Activation", () => {
   })
 
   test("style by decrement", async () => {
-    const e = [...Array(3)].map((_, i) => <TestChild text={`${i}`} />)
     const { result } = renderHook(() => useActivation({ children: e }))
     const dec = () => {
       act(() => {
@@ -124,5 +121,22 @@ describe("Activation", () => {
     assertStyle(result.current[0].isStyled, 999) // nothing styled
     dec()
     assertStyle(result.current[0].isStyled, 2)
+  })
+
+  test("isActive", async () => {
+    const { result } = renderHook(() => useActivation({ children: e }))
+    expect(result.current[0].isActive).toBe(false)
+    act(() => {
+      result.current[1].increment()
+    })
+    expect(result.current[0].isActive).toBe(true)
+    act(() => {
+      result.current[1].decrement()
+    })
+    expect(result.current[0].isActive).toBe(true)
+    act(() => {
+      result.current[1].clear()
+    })
+    expect(result.current[0].isActive).toBe(false)
   })
 })
