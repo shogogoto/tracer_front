@@ -90,4 +90,42 @@ describe("ActivationGrid1D", () => {
     await user.keyboard("{ArrowLeft}")
     assertStyle(2)
   })
+
+  test("fire click event", async () => {
+    let current: number | null = null
+
+    const e = [...Array(3)].map((_, i) => {
+      const handleClick = () => {
+        current = i
+      }
+
+      return (
+        <TestElement
+          key={i}
+          text={`${i}`}
+          handleClick={handleClick}
+        />
+      )
+    })
+    const target = <ActivationGrid1D>{e}</ActivationGrid1D>
+
+    const user = userEvent.setup()
+    const x = render(target)
+    const tgt = () => x.getByTestId("activation-grid-1d")
+    await user.click(tgt())
+
+    await user.keyboard("{ArrowRight}")
+    assertStyle(0)
+    expect(current).toBeNull()
+    await user.keyboard("{enter}")
+    expect(current).toBe(0)
+
+    await user.keyboard("{ArrowRight}")
+    await user.keyboard("{enter}")
+    expect(current).toBe(1)
+
+    await user.keyboard("{ArrowRight}")
+    await user.keyboard("{enter}")
+    expect(current).toBe(2)
+  })
 })

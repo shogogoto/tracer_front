@@ -27,17 +27,18 @@ type Func = {
   increment: VoidFunction
   decrement: VoidFunction
   clear: VoidFunction
+  fireClick: VoidFunction
 }
 
 type ReturnType = [State, Func]
 
 const useActivation = (props: Props): ReturnType => {
+  const [fSt, fFn] = useForwardClick(props.children)
   const [sSt, sFn] = useStyle({
-    elms: props.children,
+    elms: fSt.elements,
     initStyled: props.initStyled ?? false,
     css: cssActivated,
   })
-  const [, fFn] = useForwardClick(sSt.elements)
   const [rSt, rFn] = useRotateChildren(sSt.elements, null)
 
   const _clickedIndex = useCallback((ev: MouseEvent): number => {
@@ -52,19 +53,19 @@ const useActivation = (props: Props): ReturnType => {
       rFn.setIndex((prev) => {
         sFn.toggleStyle(prev)
         sFn.toggleStyle(next)
-        typeof next === "number" && fFn.forwardClick(next)
         return next
       })
     },
-    [sFn, fFn, rFn]
+    [sFn, rFn]
   )
 
   const handleClick: MouseEventHandler = useCallback(
     (ev) => {
       const next = _clickedIndex(ev)
+      fFn.forwardClick(next)
       _toggleStyle(next)
     },
-    [_clickedIndex, _toggleStyle]
+    [fFn, _clickedIndex, _toggleStyle]
   )
 
   const increment = useCallback(() => {
@@ -81,6 +82,12 @@ const useActivation = (props: Props): ReturnType => {
     const next = null
     _toggleStyle(next)
   }, [_toggleStyle])
+
+  const fireClick = useCallback(() => {
+    if (rSt.index !== null) {
+      fFn.forwardClick(rSt.index)
+    }
+  }, [fFn, rSt])
 
   const isActive = sSt.isStyled.some((e) => e)
 
@@ -100,6 +107,7 @@ const useActivation = (props: Props): ReturnType => {
       increment,
       decrement,
       clear,
+      fireClick,
     },
   ]
 }

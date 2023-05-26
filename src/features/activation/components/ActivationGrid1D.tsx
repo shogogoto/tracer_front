@@ -16,7 +16,7 @@ const ActivationGrid1D: FC<Props> = (props) => {
 
   useKey("ArrowRight", fn.increment, {}, [st])
   useKey("ArrowLeft", fn.decrement, {}, [st])
-
+  useKey("Enter", fn.fireClick, {}, [st])
   return (
     <div
       tabIndex={0}
