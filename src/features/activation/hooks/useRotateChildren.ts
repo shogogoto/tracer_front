@@ -3,24 +3,24 @@ import isEqual from "react-fast-compare"
 
 import { countChildren, rotatableToArray } from "./funcs"
 
-import type { Rotatable } from "../types"
-import type { ReactNode } from "react"
+import type { Rotatable, Index } from "../types"
+import type { ReactNode, Dispatch, SetStateAction } from "react"
 
 type State = {
   child: ReactNode
-  index: number
+  index: Index
 }
 
 type ReturnFuncs = {
   increment: () => void
+  incremental: (i: Index) => Index
   decrement: () => void
+  decremental: (i: Index) => Index
   setChild: (n: ReactNode) => void
-  setIndex: (i: number) => void
+  setIndex: Dispatch<SetStateAction<Index>>
 }
 
 export type ReturnType = [State, ReturnFuncs]
-
-type Index = number | null
 
 // 要素を切り替える
 const useRotateChildren = (n: Rotatable, initIndex: Index = 0): ReturnType => {
@@ -28,28 +28,48 @@ const useRotateChildren = (n: Rotatable, initIndex: Index = 0): ReturnType => {
   const count = countChildren(children)
   const [index, setIndexDefault] = useState<Index>(initIndex)
 
-  const increment = useCallback(() => {
+  const incremental = useCallback(
+    (i: Index): Index => {
+      return i === null ? null : ((i ?? 0) + 1) % count
+    },
+    [count]
+  )
+
+  const decremental = useCallback(
+    (i: Index): Index => {
+      return i === null ? null : ((i ?? 0) - 1 + count) % count
+    },
+    [count]
+  )
+
+  const increment = useCallback((): void => {
     if (count === 0) return
-    const nextIndex = ((index ?? 0) + 1) % count
-    setIndexDefault(nextIndex)
-  }, [count, index])
+    setIndexDefault(incremental(index))
+  }, [count, index, incremental])
 
   const decrement = useCallback(() => {
     if (count === 0) return
-    const prevIndex = ((index ?? 0) - 1 + count) % count
-    setIndexDefault(prevIndex)
-  }, [count, index])
+    setIndexDefault(decremental(index))
+  }, [count, index, decremental])
 
-  const setIndex = useCallback(
+  const _checkOutOfRange = useCallback(
     (i: number): void => {
       if (i < 0 || count <= i) {
         const msg = `${i} is out of index [0,${count})`
         throw new RangeError(msg)
-      } else {
-        setIndexDefault(i)
       }
     },
     [count]
+  )
+
+  const setIndex = useCallback(
+    (a: SetStateAction<Index>): void => {
+      if (typeof a === "number") {
+        _checkOutOfRange(a)
+      }
+      setIndexDefault(a)
+    },
+    [_checkOutOfRange]
   )
 
   const setChild = useCallback(
@@ -60,7 +80,7 @@ const useRotateChildren = (n: Rotatable, initIndex: Index = 0): ReturnType => {
     [children, setIndex]
   )
 
-  const child = children[index]
+  const child = children[index ?? -1]
 
   return [
     {
@@ -69,7 +89,9 @@ const useRotateChildren = (n: Rotatable, initIndex: Index = 0): ReturnType => {
     },
     {
       increment,
+      incremental,
       decrement,
+      decremental,
       setChild,
       setIndex,
     },

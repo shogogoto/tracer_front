@@ -46,21 +46,20 @@ describe("useRotationChildren", () => {
   test("set index by child", () => {
     const children = rotatableToArray(e3)
     const { result } = renderHook(() => useRotateChildren(children))
-    function setChild(i: number): void {
+    function assertSetChild(i: number): void {
+      const c = children[i]
       act(() => {
-        result.current[1].setChild(children[i])
+        result.current[1].setChild(c)
       })
+      expect(result.current[0].child).toEqual(c)
     }
 
-    setChild(0)
-    expect(result.current[0].child).toEqual(children[0])
-    setChild(2)
-    expect(result.current[0].child).toEqual(children[2])
-    setChild(1)
-    expect(result.current[0].child).toEqual(children[1])
+    assertSetChild(0)
+    assertSetChild(2)
+    assertSetChild(1)
 
     expect(() => {
-      setChild(999)
+      assertSetChild(999)
     }).toThrowError()
     expect(result.current[0].child).toEqual(children[1]) // child wont change
   })
