@@ -6,6 +6,9 @@ import { expect } from "vitest"
 
 expect.extend(matchers)
 
+// jsdomでは以下のメソッドが実装されていないらしいのでmock
+window.HTMLElement.prototype.scrollIntoView = function () {}
+
 // import { server } from "./server";
 
 // beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
