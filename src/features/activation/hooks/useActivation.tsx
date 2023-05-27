@@ -14,7 +14,8 @@ export const cssActivated = css`
 type Props = {
   children: Activatables
   initStyled?: boolean
-  cssActivated?: SerializedStyles
+  activeStyle?: SerializedStyles
+  style: SerializedStyles
 }
 
 type State = {
@@ -38,7 +39,7 @@ const useActivation = (props: Props): ReturnType => {
   const [sSt, sFn] = useStyle({
     elms: fSt.elements,
     initStyled: props.initStyled ?? false,
-    css: props.cssActivated ?? cssActivated,
+    css: props.activeStyle ?? cssActivated,
   })
   const [rSt, rFn] = useRotateChildren(sSt.elements, null)
 
@@ -51,12 +52,12 @@ const useActivation = (props: Props): ReturnType => {
 
   const _toggleStyle = useCallback(
     (next: Index) => {
+      fFn.scrollIntoView(next)
       rFn.setIndex((prev) => {
         sFn.toggleStyle(prev)
         sFn.toggleStyle(next)
         return next
       })
-      fFn.scrollIntoView(next)
     },
     [sFn, rFn, fFn]
   )
@@ -93,8 +94,15 @@ const useActivation = (props: Props): ReturnType => {
   const isActive = sSt.isStyled.some((e) => e)
 
   const wrapped = useMemo(
-    () => <div onClick={handleClick}>{sSt.elements}</div>,
-    [handleClick, sSt]
+    () => (
+      <div
+        onClick={handleClick}
+        css={props.style}
+      >
+        {sSt.elements}
+      </div>
+    ),
+    [handleClick, sSt, props.style]
   )
 
   return [

@@ -32,7 +32,7 @@ const e = [...Array(3)].map((_, i) => (
   />
 ))
 
-const target = <ActivationGrid1D>{e}</ActivationGrid1D>
+const target = <ActivationGrid1D styleType="horizon">{e}</ActivationGrid1D>
 
 describe("ActivationGrid1D", () => {
   function assertStyle(i: number): void {
@@ -107,25 +107,25 @@ describe("ActivationGrid1D", () => {
         />
       )
     })
-    const target = <ActivationGrid1D>{e}</ActivationGrid1D>
+    const target = <ActivationGrid1D styleType="vertical">{e}</ActivationGrid1D>
 
     const user = userEvent.setup()
     const x = render(target)
     const tgt = () => x.getByTestId("activation-grid-1d")
     await user.click(tgt())
 
-    await user.keyboard("{ArrowRight}")
+    await user.keyboard("{ArrowDown}")
     assertStyle(0)
     expect(current).toBeNull()
     await user.keyboard("{enter}")
     expect(current).toBe(0)
 
-    await user.keyboard("{ArrowRight}")
+    await user.keyboard("{ArrowDown}")
     await user.keyboard("{enter}")
     expect(current).toBe(1)
 
-    await user.keyboard("{ArrowRight}")
+    await user.keyboard("{ArrowUp}")
     await user.keyboard("{enter}")
-    expect(current).toBe(2)
+    expect(current).toBe(0)
   })
 })

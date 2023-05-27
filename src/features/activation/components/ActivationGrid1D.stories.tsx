@@ -1,3 +1,4 @@
+import { css } from "@emotion/react"
 import { forwardRef } from "react"
 
 import ActivationGrid1D from "./ActivationGrid1D"
@@ -6,7 +7,7 @@ import type { Activatables } from "../types"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
-  title: "ActivationGrid1D",
+  title: "activation/ActivationGrid1D",
   component: ActivationGrid1D,
   tags: ["autodocs"],
 } satisfies Meta<typeof ActivationGrid1D>
@@ -18,6 +19,10 @@ type TestProps = {
   text: string
 }
 
+const testStyle = css`
+  width: 60px;
+`
+
 const TestElement = forwardRef<HTMLDivElement, TestProps>((props, ref) => {
   const handleClick = (): void => {
     console.log(props.text)
@@ -27,6 +32,7 @@ const TestElement = forwardRef<HTMLDivElement, TestProps>((props, ref) => {
     <div
       onClick={handleClick}
       ref={ref}
+      css={testStyle}
     >
       {props.text}
     </div>
@@ -43,26 +49,16 @@ function createChildren(num: number): Activatables {
   ))
 }
 
-export const Component0: Story = {
-  args: {
-    children: createChildren(0),
-  },
-}
-
-export const Component1: Story = {
-  args: {
-    children: createChildren(1),
-  },
-}
-
-export const Components2: Story = {
-  args: {
-    children: createChildren(2),
-  },
-}
-
-export const Components50: Story = {
+export const Horizon: Story = {
   args: {
     children: createChildren(50),
+    styleType: "horizon",
+  },
+}
+
+export const Vertical: Story = {
+  args: {
+    children: createChildren(50),
+    styleType: "vertical",
   },
 }
