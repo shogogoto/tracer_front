@@ -2,7 +2,7 @@ import { useRef, useCallback, cloneElement, createRef } from "react"
 
 import { activatableToArray } from "./funcs"
 
-import type { Activatables } from "../types"
+import type { Activatables, Index } from "../types"
 import type { ReactElement, RefObject, MutableRefObject } from "react"
 
 type Refs = Array<RefObject<HTMLElement>>
@@ -13,7 +13,8 @@ type State = {
 }
 
 type Func = {
-  forwardClick: (i: number) => void
+  forwardClick: (i: Index) => void
+  scrollIntoView: (i: Index) => void
 }
 
 type ReturnType = [State, Func]
@@ -26,8 +27,18 @@ const useForwardClick = (elms: Activatables): ReturnType => {
     refs.current[i] = createRef<HTMLElement>()
   })
 
-  const forwardClick = useCallback((i: number) => {
+  const forwardClick = useCallback((i: Index) => {
+    if (i === null) return
     refs.current[i].current?.click()
+  }, [])
+
+  const scrollIntoView = useCallback((i: Index) => {
+    if (i === null) return
+    refs.current[i].current?.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "center",
+    })
   }, [])
 
   const elements = arr.map((elm, i) =>
@@ -41,6 +52,7 @@ const useForwardClick = (elms: Activatables): ReturnType => {
     },
     {
       forwardClick,
+      scrollIntoView,
     },
   ]
 }

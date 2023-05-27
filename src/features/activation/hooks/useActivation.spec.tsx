@@ -37,6 +37,9 @@ const Activation: FC<Props> = (props) => {
 const e = [...Array(3)].map((_, i) => <TestChild text={`${i}`} />)
 
 describe("Activation", () => {
+  // jsdomでは以下のメソッドが実装されていないらしいのでmock
+  window.HTMLElement.prototype.scrollIntoView = function () {}
+
   function assertStyle(actual: boolean[], i: number): void {
     const expected = [...Array(3)].map((_, j) => (j === i ? true : false))
     expect(actual).toEqual(expected)

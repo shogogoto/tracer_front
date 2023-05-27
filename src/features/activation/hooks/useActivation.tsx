@@ -1,4 +1,4 @@
-import { css } from "@emotion/react"
+import { css, type SerializedStyles } from "@emotion/react"
 import { useMemo, useCallback } from "react"
 
 import { useForwardClick, useStyle, useRotateChildren } from "../hooks"
@@ -14,6 +14,7 @@ export const cssActivated = css`
 type Props = {
   children: Activatables
   initStyled?: boolean
+  cssActivated?: SerializedStyles
 }
 
 type State = {
@@ -37,7 +38,7 @@ const useActivation = (props: Props): ReturnType => {
   const [sSt, sFn] = useStyle({
     elms: fSt.elements,
     initStyled: props.initStyled ?? false,
-    css: cssActivated,
+    css: props.cssActivated ?? cssActivated,
   })
   const [rSt, rFn] = useRotateChildren(sSt.elements, null)
 
@@ -55,8 +56,9 @@ const useActivation = (props: Props): ReturnType => {
         sFn.toggleStyle(next)
         return next
       })
+      fFn.scrollIntoView(next)
     },
-    [sFn, rFn]
+    [sFn, rFn, fFn]
   )
 
   const handleClick: MouseEventHandler = useCallback(
@@ -84,9 +86,8 @@ const useActivation = (props: Props): ReturnType => {
   }, [_toggleStyle])
 
   const fireClick = useCallback(() => {
-    if (rSt.index !== null) {
-      fFn.forwardClick(rSt.index)
-    }
+    fFn.scrollIntoView(rSt.index)
+    fFn.forwardClick(rSt.index)
   }, [fFn, rSt])
 
   const isActive = sSt.isStyled.some((e) => e)
