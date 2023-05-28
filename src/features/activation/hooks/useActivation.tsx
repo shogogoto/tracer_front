@@ -15,7 +15,7 @@ type Props = {
   children: Activatables
   initStyled?: boolean
   activeStyle?: SerializedStyles
-  style: SerializedStyles
+  style?: SerializedStyles
 }
 
 type State = {

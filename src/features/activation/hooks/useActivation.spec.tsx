@@ -34,7 +34,12 @@ const Activation: FC<Props> = (props) => {
   const [s] = useActivation(props)
   return s.wrapped
 }
-const e = [...Array(3)].map((_, i) => <TestChild text={`${i}`} />)
+const e = [...Array(3)].map((_, i) => (
+  <TestChild
+    key={i}
+    text={`${i}`}
+  />
+))
 
 describe("Activation", () => {
   function assertStyle(actual: boolean[], i: number): void {

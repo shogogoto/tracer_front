@@ -107,3 +107,6 @@ dist
 *.tfvars
 terraform.tfstate*
 .terraform*
+
+# swc
+.swc/

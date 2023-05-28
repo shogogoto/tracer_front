@@ -1,3 +1,4 @@
+import React from "react"
 import { type ReactNode } from "react"
 import flattenChildren from "react-flatten-children"
 
@@ -41,6 +42,6 @@ describe("indexChild", () => {
     expect(indexChild(e3, children[1])).toBe(1)
     expect(indexChild(e3, null)).toBe(-1)
     expect(indexChild(e3, undefined)).toBe(-1)
-    expect(indexChild(e3, <div></div>)).toBe(-1)
+    expect(indexChild(e3, <div />)).toBe(-1)
   })
 })
