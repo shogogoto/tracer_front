@@ -6,10 +6,9 @@ import tsconfigPaths from "vite-tsconfig-paths"
 export default defineConfig({
   plugins: [
     react({
+      tsDecorators: true,
       jsxImportSource: "@emotion/react",
-      babel: {
-        plugins: ["@emotion/babel-plugin"],
-      },
+      plugins: [["@swc/plugin-emotion", {}]],
     }),
     tsconfigPaths(),
   ],
