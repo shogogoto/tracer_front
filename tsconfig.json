@@ -26,6 +26,16 @@
       "node",
       "@testing-library/jest-dom",
       "@emotion/react/types/css-prop"
+    ],
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin",
+        "tags": [
+          "styled",
+          "css",
+          "sty"
+        ]
+      }
     ]
   },
   "include": ["src"],
