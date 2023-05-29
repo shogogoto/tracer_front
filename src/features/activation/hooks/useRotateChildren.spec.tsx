@@ -4,7 +4,7 @@ import { act } from "react-dom/test-utils"
 import flattenChildren from "react-flatten-children"
 
 import useRotateChildren, { type ReturnType } from "./useRotateChildren"
-import { rotatableToArray } from "./funcs"
+import { rotatableToArray } from "../utils"
 
 describe("useRotationChildren", () => {
   test("one element", () => {
