@@ -16,6 +16,7 @@ type Props = {
   initStyled?: boolean
   activeStyle?: SerializedStyles
   style?: SerializedStyles
+  index?: Index
 }
 
 type State = {
@@ -28,6 +29,8 @@ type Func = {
   handleClick: MouseEventHandler
   increment: VoidFunction
   decrement: VoidFunction
+  setFirstIndex: VoidFunction
+  setLastIndex: VoidFunction
   clear: VoidFunction
   fireClick: VoidFunction
 }
@@ -41,7 +44,7 @@ const useActivation = (props: Props): ReturnType => {
     initStyled: props.initStyled ?? false,
     css: props.activeStyle ?? cssActivated,
   })
-  const [rSt, rFn] = useRotateChildren(sSt.elements, null)
+  const [rSt, rFn] = useRotateChildren(sSt.elements, props.index ?? null)
 
   const _clickedIndex = useCallback((ev: MouseEvent): number => {
     const nodes = ev.currentTarget.childNodes
@@ -81,6 +84,14 @@ const useActivation = (props: Props): ReturnType => {
     _toggleStyle(next)
   }, [rFn, rSt, _toggleStyle])
 
+  const setFirstIndex = useCallback(() => {
+    _toggleStyle(rSt.firstIndex)
+  }, [_toggleStyle, rSt])
+
+  const setLastIndex = useCallback(() => {
+    _toggleStyle(rSt.lastIndex)
+  }, [_toggleStyle, rSt])
+
   const clear = useCallback(() => {
     const next = null
     _toggleStyle(next)
@@ -115,6 +126,8 @@ const useActivation = (props: Props): ReturnType => {
       handleClick,
       increment,
       decrement,
+      setFirstIndex,
+      setLastIndex,
       clear,
       fireClick,
     },

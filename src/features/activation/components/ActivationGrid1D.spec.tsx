@@ -89,6 +89,12 @@ describe("ActivationGrid1D", () => {
     assertStyle(0)
     await user.keyboard("{ArrowLeft}")
     assertStyle(2)
+
+    await user.keyboard("{Control>}{ArrowLeft}{/Control}")
+    assertStyle(0)
+
+    await user.keyboard("{Control>}{ArrowRight}{/Control}")
+    assertStyle(2)
   })
 
   test("fire click event", async () => {

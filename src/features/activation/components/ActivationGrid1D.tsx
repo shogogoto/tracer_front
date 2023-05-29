@@ -3,9 +3,10 @@ import { useKey } from "react-use"
 
 import { useActivation } from "../hooks"
 
-import type { Activatables } from "../types"
+import type { Activatables, Index } from "../types"
 import type { SerializedStyles } from "@emotion/react"
 import type { FC } from "react"
+import type { KeyFilter } from "react-use/lib/useKey"
 
 type StyleType = "horizon" | "vertical"
 
@@ -27,9 +28,14 @@ const keyProps = (t: StyleType): StyleProps => {
     : ["ArrowDown", "ArrowUp", nonStyle]
 }
 
+const withCtrlKeyFilter = (key: string): KeyFilter => {
+  return (ev) => ev.ctrlKey && ev.key === key
+}
+
 type Props = {
   children: Activatables
   styleType: StyleType
+  initialIndex?: Index
 }
 
 const ActivationGrid1D: FC<Props> = (props) => {
@@ -37,10 +43,14 @@ const ActivationGrid1D: FC<Props> = (props) => {
   const [st, fn] = useActivation({
     children: props.children,
     style,
+    index: props.initialIndex ?? null,
   })
 
   useKey(positiveKey, fn.increment, {}, [st])
   useKey(negativeKey, fn.decrement, {}, [st])
+  useKey(withCtrlKeyFilter(positiveKey), fn.setLastIndex, {}, [st])
+  useKey(withCtrlKeyFilter(negativeKey), fn.setFirstIndex, {}, [st])
+
   useKey("Enter", fn.fireClick, {}, [st])
   return (
     <div
