@@ -9,6 +9,9 @@ import type { ReactNode, Dispatch, SetStateAction } from "react"
 type State = {
   child: ReactNode
   index: Index
+  count: number
+  firstIndex: Index
+  lastIndex: Index
 }
 
 type ReturnFuncs = {
@@ -26,21 +29,22 @@ export type ReturnType = [State, ReturnFuncs]
 const useRotateChildren = (n: Rotatable, initIndex: Index = 0): ReturnType => {
   const children = rotatableToArray(n)
   const count = countChildren(children)
+  const firstIndex = count === 0 ? null : 0
+  const lastIndex = count === 0 ? null : count - 1
   const [index, setIndexDefault] = useState<Index>(initIndex)
 
   const incremental = useCallback(
     (i: Index): Index => {
-      return i === null ? 0 : ((i ?? 0) + 1) % count
+      return i === null ? firstIndex : ((i ?? 0) + 1) % count
     },
-    [count]
+    [count, firstIndex]
   )
 
   const decremental = useCallback(
     (i: Index): Index => {
-      const last = count - 1
-      return i === null ? last : ((i ?? 0) - 1 + count) % count
+      return i === null ? lastIndex : ((i ?? 0) - 1 + count) % count
     },
-    [count]
+    [count, lastIndex]
   )
 
   const increment = useCallback(() => {
@@ -87,6 +91,9 @@ const useRotateChildren = (n: Rotatable, initIndex: Index = 0): ReturnType => {
     {
       child,
       index,
+      count,
+      firstIndex,
+      lastIndex,
     },
     {
       increment,
