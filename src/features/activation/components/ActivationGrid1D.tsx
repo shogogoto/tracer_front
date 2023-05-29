@@ -32,6 +32,10 @@ const withCtrlKeyFilter = (key: string): KeyFilter => {
   return (ev) => ev.ctrlKey && ev.key === key
 }
 
+const withoutCtrlKeyFilter = (key: string): KeyFilter => {
+  return (ev) => !ev.ctrlKey && ev.key === key
+}
+
 type Props = {
   children: Activatables
   styleType: StyleType
@@ -46,8 +50,8 @@ const ActivationGrid1D: FC<Props> = (props) => {
     index: props.initialIndex ?? null,
   })
 
-  useKey(positiveKey, fn.increment, {}, [st])
-  useKey(negativeKey, fn.decrement, {}, [st])
+  useKey(withoutCtrlKeyFilter(positiveKey), fn.increment, {}, [st])
+  useKey(withoutCtrlKeyFilter(negativeKey), fn.decrement, {}, [st])
   useKey(withCtrlKeyFilter(positiveKey), fn.setLastIndex, {}, [st])
   useKey(withCtrlKeyFilter(negativeKey), fn.setFirstIndex, {}, [st])
 
