@@ -1,6 +1,6 @@
 import { useRef, useCallback, cloneElement, createRef } from "react"
 
-import { activatableToArray } from "./funcs"
+import { activatableToArray } from "../utils"
 
 import type { Activatables, Index } from "../types"
 import type { ReactElement, RefObject, MutableRefObject } from "react"

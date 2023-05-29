@@ -2,7 +2,7 @@ import React from "react"
 import { type ReactNode } from "react"
 import flattenChildren from "react-flatten-children"
 
-import { countChildren, indexChild } from "./funcs"
+import { countChildren, indexChild } from "./react"
 
 const e1 = <div></div>
 const e2 = (

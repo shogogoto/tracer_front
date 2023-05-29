@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react"
 
-import { activatableToArray } from "./funcs"
+import { activatableToArray } from "../utils"
 
 import type { Activatables } from "../types"
 import type { SerializedStyles } from "@emotion/react"

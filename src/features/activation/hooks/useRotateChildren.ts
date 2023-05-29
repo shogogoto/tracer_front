@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react"
 import isEqual from "react-fast-compare"
 
-import { countChildren, rotatableToArray } from "./funcs"
+import { countChildren, rotatableToArray } from "../utils"
 
 import type { Rotatable, Index } from "../types"
 import type { ReactNode, Dispatch, SetStateAction } from "react"
