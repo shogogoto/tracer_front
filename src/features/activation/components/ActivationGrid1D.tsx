@@ -1,11 +1,13 @@
 import { css } from "@emotion/react"
+import { forwardRef } from "react"
 import { useHotkeys } from "react-hotkeys-hook"
+import { mergeRefs } from "react-merge-refs"
 
 import { useActivation } from "../hooks"
 
 import type { Activatables, Index } from "../types"
 import type { SerializedStyles } from "@emotion/react"
-import type { FC } from "react"
+import type { FC, RefObject } from "react"
 
 type StyleType = "horizon" | "vertical"
 
@@ -27,6 +29,7 @@ type Props = {
   children: Activatables
   styleType: StyleType
   initialIndex?: Index
+  ref?: RefObject<HTMLDivElement>
 }
 
 const ActivationGrid1D: FC<Props> = (props) => {
@@ -37,17 +40,20 @@ const ActivationGrid1D: FC<Props> = (props) => {
     index: props.initialIndex ?? null,
   })
 
-  useHotkeys(`${plusKey}`, fn.increment, {}, [st])
-  useHotkeys(`${minusKey}`, fn.decrement, {}, [st])
-  useHotkeys(`ctrl+${plusKey}`, fn.setLastIndex, {}, [st])
-  useHotkeys(`ctrl+${minusKey}`, fn.setFirstIndex, {}, [st])
-  useHotkeys("enter", fn.fireClick, {}, [st])
+  type T = HTMLDivElement
+  const ref1 = useHotkeys<T>(`${plusKey}`, fn.increment, {}, [st])
+  const ref2 = useHotkeys<T>(`${minusKey}`, fn.decrement, {}, [st])
+  const ref3 = useHotkeys<T>(`ctrl+${plusKey}`, fn.setLastIndex, {}, [st])
+  const ref4 = useHotkeys<T>(`ctrl+${minusKey}`, fn.setFirstIndex, {}, [st])
+  const ref5 = useHotkeys<T>("enter", fn.fireClick, {}, [st])
+  const ref = mergeRefs<T>([ref1, ref2, ref3, ref4, ref5])
 
   return (
     <div
       tabIndex={0}
       data-testid="activation-grid-1d"
       onBlur={fn.clear}
+      ref={ref}
     >
       {st.wrapped}
     </div>
@@ -55,3 +61,15 @@ const ActivationGrid1D: FC<Props> = (props) => {
 }
 
 export default ActivationGrid1D
+
+export const ActivationGrid1DRef = forwardRef<HTMLDivElement, Props>(
+  (props, ref) => {
+    return (
+      <ActivationGrid1D
+        {...props}
+        ref={ref}
+      />
+    )
+  }
+)
+ActivationGrid1DRef.displayName = "ActivationGrid1DRef"
