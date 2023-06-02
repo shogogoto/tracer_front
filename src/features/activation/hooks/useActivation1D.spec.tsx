@@ -6,7 +6,7 @@ import type { FC, MouseEventHandler } from "react"
 import { act } from "@testing-library/react"
 
 import type { Activatables } from "../types"
-import { useActivation } from "../hooks"
+import { useActivation1D } from "../hooks"
 
 type TestProps = {
   handleClick?: MouseEventHandler
@@ -31,7 +31,7 @@ type Props = {
 }
 
 const Activation: FC<Props> = (props) => {
-  const [s] = useActivation(props)
+  const [s] = useActivation1D(props)
   return s.wrapped
 }
 const e = [...Array(3)].map((_, i) => (
@@ -48,7 +48,7 @@ describe("Activation", () => {
   }
 
   test("style by click", async () => {
-    const { result } = renderHook(() => useActivation({ children: e }))
+    const { result } = renderHook(() => useActivation1D({ children: e }))
     const r = render(<Activation>{e}</Activation>)
     const user = userEvent.setup()
 
@@ -83,7 +83,7 @@ describe("Activation", () => {
   })
 
   test("style by increment", async () => {
-    const { result } = renderHook(() => useActivation({ children: e }))
+    const { result } = renderHook(() => useActivation1D({ children: e }))
     const inc = () => {
       act(() => {
         result.current[1].increment()
@@ -106,7 +106,7 @@ describe("Activation", () => {
   })
 
   test("style by decrement", async () => {
-    const { result } = renderHook(() => useActivation({ children: e }))
+    const { result } = renderHook(() => useActivation1D({ children: e }))
     const dec = () => {
       act(() => {
         result.current[1].decrement()
@@ -129,7 +129,7 @@ describe("Activation", () => {
   })
 
   test("isActive", async () => {
-    const { result } = renderHook(() => useActivation({ children: e }))
+    const { result } = renderHook(() => useActivation1D({ children: e }))
     expect(result.current[0].isActive).toBe(false)
     act(() => {
       result.current[1].increment()

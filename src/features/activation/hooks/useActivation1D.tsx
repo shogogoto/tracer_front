@@ -13,7 +13,6 @@ export const cssActivated = css`
 
 type Props = {
   children: Activatables
-  initStyled?: boolean
   activeStyle?: SerializedStyles
   style?: SerializedStyles
   index?: Index
