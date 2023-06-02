@@ -1,4 +1,5 @@
-import useActivation from "./useActivation"
+import useActivation1D from "./useActivation1D"
+import useActiveStyle from "./useActiveStyle"
 import useCurrentNode from "./useCurrentNode"
 import useForwardClick from "./useForwardClick"
 import useRotateChildren from "./useRotateChildren"
@@ -9,5 +10,6 @@ export {
   useRotateChildren,
   useForwardClick,
   useStyle,
-  useActivation,
+  useActivation1D,
+  useActiveStyle,
 }

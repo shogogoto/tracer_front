@@ -23,7 +23,7 @@ describe("useForwardClick", () => {
 
     expect(clicked).toBe(false)
     act(() => {
-      result.current[1].forwardClick(0)
+      result.current[1].click(0)
     })
     expect(clicked).toBe(true)
   })

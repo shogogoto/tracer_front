@@ -13,7 +13,7 @@ type State = {
 }
 
 type Func = {
-  forwardClick: (i: Index) => void
+  click: (i: Index) => void
   scrollIntoView: (i: Index) => void
 }
 
@@ -27,7 +27,7 @@ const useForwardClick = (elms: Activatables): ReturnType => {
     refs.current[i] = createRef<HTMLElement>()
   })
 
-  const forwardClick = useCallback((i: Index) => {
+  const click = useCallback((i: Index) => {
     if (i === null) return
     refs.current[i].current?.click()
   }, [])
@@ -51,7 +51,7 @@ const useForwardClick = (elms: Activatables): ReturnType => {
       refs,
     },
     {
-      forwardClick,
+      click,
       scrollIntoView,
     },
   ]

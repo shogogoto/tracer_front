@@ -3,7 +3,7 @@ import { forwardRef } from "react"
 import { useHotkeys } from "react-hotkeys-hook"
 import { mergeRefs } from "react-merge-refs"
 
-import { useActivation } from "../hooks"
+import { useActivation1D } from "../hooks"
 
 import type { Activatables, Index } from "../types"
 import type { SerializedStyles } from "@emotion/react"
@@ -34,7 +34,7 @@ type Props = {
 
 const ActivationGrid1D: FC<Props> = (props) => {
   const [plusKey, minusKey, style] = keyProps(props.styleType)
-  const [st, fn] = useActivation({
+  const [st, fn] = useActivation1D({
     children: props.children,
     style,
     index: props.initialIndex ?? null,
