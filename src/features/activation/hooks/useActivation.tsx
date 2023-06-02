@@ -75,21 +75,21 @@ const useActivation = (props: Props): ReturnType => {
   )
 
   const increment = useCallback(() => {
-    const next = rFn.incremental(rSt.index)
+    const next = rSt.rotator.increment(rSt.index)
     _toggleStyle(next)
-  }, [rFn, rSt, _toggleStyle])
+  }, [rSt, _toggleStyle])
 
   const decrement = useCallback(() => {
-    const next = rFn.decremental(rSt.index)
+    const next = rSt.rotator.decrement(rSt.index)
     _toggleStyle(next)
-  }, [rFn, rSt, _toggleStyle])
+  }, [rSt, _toggleStyle])
 
   const setFirstIndex = useCallback(() => {
-    _toggleStyle(rSt.firstIndex)
+    _toggleStyle(rSt.rotator.min)
   }, [_toggleStyle, rSt])
 
   const setLastIndex = useCallback(() => {
-    _toggleStyle(rSt.lastIndex)
+    _toggleStyle(rSt.rotator.max)
   }, [_toggleStyle, rSt])
 
   const clear = useCallback(() => {

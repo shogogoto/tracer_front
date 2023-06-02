@@ -1,24 +1,28 @@
 import { useState, useCallback } from "react"
-import isEqual from "react-fast-compare"
 
-import { countChildren, rotatableToArray } from "../utils"
+import {
+  countChildren,
+  rotatableToArray,
+  IndexRotator,
+  indexChild,
+} from "../utils"
 
 import type { Rotatable, Index } from "../types"
+import type { Rotator } from "../utils"
 import type { ReactNode, Dispatch, SetStateAction } from "react"
 
 type State = {
   child: ReactNode
   index: Index
   count: number
-  firstIndex: Index
-  lastIndex: Index
+  // firstIndex: Index
+  // lastIndex: Index
+  rotator: Rotator
 }
 
 type ReturnFuncs = {
   increment: () => void
-  incremental: (i: Index) => Index
   decrement: () => void
-  decremental: (i: Index) => Index
   setChild: (n: ReactNode) => void
   setIndex: Dispatch<SetStateAction<Index>>
 }
@@ -29,33 +33,16 @@ export type ReturnType = [State, ReturnFuncs]
 const useRotateChildren = (n: Rotatable, initIndex: Index = 0): ReturnType => {
   const children = rotatableToArray(n)
   const count = countChildren(children)
-  const firstIndex = count === 0 ? null : 0
-  const lastIndex = count === 0 ? null : count - 1
+  const rot = IndexRotator.create(0, count - 1)
   const [index, setIndexDefault] = useState<Index>(initIndex)
 
-  const incremental = useCallback(
-    (i: Index): Index => {
-      return i === null ? firstIndex : ((i ?? 0) + 1) % count
-    },
-    [count, firstIndex]
-  )
-
-  const decremental = useCallback(
-    (i: Index): Index => {
-      return i === null ? lastIndex : ((i ?? 0) - 1 + count) % count
-    },
-    [count, lastIndex]
-  )
-
   const increment = useCallback(() => {
-    if (count === 0) return
-    setIndexDefault(incremental(index))
-  }, [count, index, incremental])
+    setIndexDefault(rot.increment(index))
+  }, [index, rot])
 
   const decrement = useCallback(() => {
-    if (count === 0) return
-    setIndexDefault(decremental(index))
-  }, [count, index, decremental])
+    setIndexDefault(rot.decrement(index))
+  }, [index, rot])
 
   const _checkOutOfRange = useCallback(
     (i: number): void => {
@@ -79,7 +66,11 @@ const useRotateChildren = (n: Rotatable, initIndex: Index = 0): ReturnType => {
 
   const setChild = useCallback(
     (child: ReactNode) => {
-      const i = children.findIndex((e) => isEqual(e, child))
+      if (child == null) {
+        const msg = "null or undefined is not allow to set"
+        throw new RangeError(msg)
+      }
+      const i = indexChild(children, child)
       setIndex(i)
     },
     [children, setIndex]
@@ -92,14 +83,11 @@ const useRotateChildren = (n: Rotatable, initIndex: Index = 0): ReturnType => {
       child,
       index,
       count,
-      firstIndex,
-      lastIndex,
+      rotator: rot,
     },
     {
       increment,
-      incremental,
       decrement,
-      decremental,
       setChild,
       setIndex,
     },

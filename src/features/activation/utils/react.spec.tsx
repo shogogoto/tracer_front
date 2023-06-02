@@ -40,8 +40,8 @@ describe("indexChild", () => {
   test("", () => {
     expect(indexChild(e3, children[0])).toBe(0)
     expect(indexChild(e3, children[1])).toBe(1)
-    expect(indexChild(e3, null)).toBe(-1)
-    expect(indexChild(e3, undefined)).toBe(-1)
-    expect(indexChild(e3, <div />)).toBe(-1)
+    expect(indexChild(e3, null)).toBeNull()
+    expect(indexChild(e3, undefined)).toBeNull()
+    expect(indexChild(e3, <div />)).toBeNull()
   })
 })

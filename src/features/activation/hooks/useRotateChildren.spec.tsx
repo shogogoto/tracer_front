@@ -86,23 +86,23 @@ describe("useRotationChildren", () => {
 
   test("first index null", () => {
     const { result } = renderHook(() => useRotateChildren([]))
-    expect(result.current[0].firstIndex).toBeNull()
+    expect(result.current[0].rotator.min).toBeNull()
   })
 
   test("first index null", () => {
     const children = rotatableToArray(e3)
     const { result } = renderHook(() => useRotateChildren(children))
-    expect(result.current[0].firstIndex).toBe(0)
+    expect(result.current[0].rotator.min).toBe(0)
   })
 
   test("last index null", () => {
     const { result } = renderHook(() => useRotateChildren([]))
-    expect(result.current[0].lastIndex).toBeNull()
+    expect(result.current[0].rotator.max).toBeNull()
   })
 
   test("last index null", () => {
     const children = rotatableToArray(e3)
     const { result } = renderHook(() => useRotateChildren(children))
-    expect(result.current[0].lastIndex).toBe(children.length - 1)
+    expect(result.current[0].rotator.max).toBe(children.length - 1)
   })
 })

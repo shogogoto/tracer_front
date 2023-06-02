@@ -1,19 +1,23 @@
-import type { Index } from "../types"
+import type { Index, IndexOperation } from "../types"
 
-type Rotator = {
-  increment: (i: Index) => Index
-  decrement: (i: Index) => Index
-}
-
-export class NullIndexRotator implements Rotator {
-  increment = (i: Index): Index => null
-  decrement = (i: Index): Index => null
+export type Rotator = {
+  min: Index
+  max: Index
+  increment: IndexOperation
+  decrement: IndexOperation
 }
 
 function checkInteger(i: Index, msg: string): void {
   if (!Number.isInteger(i)) {
     throw new RangeError(`${msg} must be integer`)
   }
+}
+
+class NullIndexRotator implements Rotator {
+  min = null
+  max = null
+  increment: IndexOperation = (i) => null
+  decrement: IndexOperation = (i) => null
 }
 
 const LARGE_ENOUGH = 10000
@@ -23,10 +27,7 @@ export class IndexRotator implements Rotator {
   }
 
   private readonly count: number
-  private constructor(
-    private readonly min: number,
-    private readonly max: number
-  ) {
+  public constructor(public readonly min: number, public readonly max: number) {
     if (min > max) {
       throw new RangeError("max must be min or more")
     }
@@ -35,7 +36,7 @@ export class IndexRotator implements Rotator {
     this.count = max + 1
   }
 
-  increment(i: Index): Index {
+  increment: IndexOperation = (i) => {
     this.checkArg(i)
     if (i === null) {
       return this.min
@@ -46,7 +47,7 @@ export class IndexRotator implements Rotator {
     }
   }
 
-  decrement(i: Index): Index {
+  decrement: IndexOperation = (i) => {
     this.checkArg(i)
     if (i === null) {
       return this.max
@@ -107,21 +108,21 @@ export class IndexFolder {
     this.modG = new ModulusGroup(arr, foldSize)
   }
 
-  incrementHorizontal(i: Index): Index {
+  incrementHorizontal: IndexOperation = (i) => {
     if (i === null) {
       return this.wholeRot.increment(i)
     }
     return this.foldedRotator(i).increment(i)
   }
 
-  decrementHorizontal(i: Index): Index {
+  decrementHorizontal: IndexOperation = (i) => {
     if (i === null) {
       return this.wholeRot.decrement(i)
     }
     return this.foldedRotator(i).decrement(i)
   }
 
-  incrementVertical(i: Index): Index {
+  incrementVertical: IndexOperation = (i) => {
     if (i === null) {
       return this.wholeRot.increment(i)
     }
@@ -131,7 +132,7 @@ export class IndexFolder {
     return inc === null ? null : g[inc]
   }
 
-  decrementVertical(i: Index): Index {
+  decrementVertical: IndexOperation = (i) => {
     if (i === null) {
       return this.wholeRot.decrement(i)
     }
