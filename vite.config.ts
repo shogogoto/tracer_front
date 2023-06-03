@@ -12,7 +12,6 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
-  // base: "./",
   test: {
     globals: true,
     environment: "jsdom",
