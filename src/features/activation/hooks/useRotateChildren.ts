@@ -34,35 +34,15 @@ const useRotateChildren = (n: Rotatable, initIndex: Index = 0): ReturnType => {
   const children = rotatableToArray(n)
   const count = countChildren(children)
   const rot = IndexRotator.create(0, count - 1)
-  const [index, setIndexDefault] = useState<Index>(initIndex)
+  const [index, setIndex] = useState<Index>(initIndex)
 
   const increment = useCallback(() => {
-    setIndexDefault(rot.increment(index))
+    setIndex(rot.increment(index))
   }, [index, rot])
 
   const decrement = useCallback(() => {
-    setIndexDefault(rot.decrement(index))
+    setIndex(rot.decrement(index))
   }, [index, rot])
-
-  const _checkOutOfRange = useCallback(
-    (i: number): void => {
-      if (i < 0 || count <= i) {
-        const msg = `${i} is out of index [0,${count})`
-        throw new RangeError(msg)
-      }
-    },
-    [count]
-  )
-
-  const setIndex = useCallback(
-    (a: SetStateAction<Index>): void => {
-      if (typeof a === "number") {
-        _checkOutOfRange(a)
-      }
-      setIndexDefault(a)
-    },
-    [_checkOutOfRange]
-  )
 
   const setChild = useCallback(
     (child: ReactNode) => {

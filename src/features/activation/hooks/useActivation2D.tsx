@@ -30,8 +30,10 @@ type Func = {
   decHorizontal: VoidFunction
   incVertical: VoidFunction
   decVertical: VoidFunction
-  setFirstIndex: VoidFunction
-  setLastIndex: VoidFunction
+  setFirstHorizontal: VoidFunction
+  setLastHorizontal: VoidFunction
+  setFirstVertical: VoidFunction
+  setLastVertical: VoidFunction
   clear: VoidFunction
 }
 
@@ -64,13 +66,25 @@ const useActivation2D = (props: Props): ReturnType => {
     fn.toggleStyle(next)
   }, [folder, st, fn])
 
-  const setFirstIndex = useCallback(() => {
-    fn.toggleStyle(st.rotator.min)
-  }, [fn, st])
+  const setFirstHorizontal = useCallback(() => {
+    const next = folder.firstHorizontal(st.index)
+    fn.toggleStyle(next)
+  }, [fn, st, folder])
 
-  const setLastIndex = useCallback(() => {
-    fn.toggleStyle(st.rotator.max)
-  }, [fn, st])
+  const setLastHorizontal = useCallback(() => {
+    const next = folder.lastHorizontal(st.index)
+    fn.toggleStyle(next)
+  }, [fn, st, folder])
+
+  const setFirstVertical = useCallback(() => {
+    const next = folder.firstVertical(st.index)
+    fn.toggleStyle(next)
+  }, [fn, st, folder])
+
+  const setLastVertical = useCallback(() => {
+    const next = folder.lastVertical(st.index)
+    fn.toggleStyle(next)
+  }, [fn, st, folder])
 
   const clear = useCallback(() => {
     fn.toggleStyle(null)
@@ -116,8 +130,10 @@ const useActivation2D = (props: Props): ReturnType => {
       decHorizontal,
       incVertical,
       decVertical,
-      setFirstIndex,
-      setLastIndex,
+      setFirstHorizontal,
+      setLastHorizontal,
+      setFirstVertical,
+      setLastVertical,
       clear,
     },
   ]

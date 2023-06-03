@@ -13,6 +13,12 @@ function checkInteger(i: Index, msg: string): void {
   }
 }
 
+export function checkInRange(i: Index, min: number, max: number): void {
+  if (i !== null && (i < min || max < i)) {
+    throw new RangeError(`${i} is out of [${min}, ${max}]`)
+  }
+}
+
 class NullIndexRotator implements Rotator {
   min = null
   max = null
@@ -75,6 +81,7 @@ class ModulusGroup {
   }
 
   group(rest: number): number[] {
+    checkInRange(rest, 0, this.modValue)
     return this.arr.filter((v) => v % this.modValue === rest)
   }
 
@@ -140,6 +147,34 @@ export class IndexFolder {
     const g = this.modG.group(i % this.foldSize)
     const dec = rot.decrement(gIdx)
     return dec === null ? null : g[dec]
+  }
+
+  firstHorizontal: IndexOperation = (i) => {
+    if (i === null) {
+      return this.wholeRot.increment(i)
+    }
+    return this.foldedRotator(i).min
+  }
+
+  lastHorizontal: IndexOperation = (i) => {
+    if (i === null) {
+      return this.wholeRot.increment(i)
+    }
+    return this.foldedRotator(i).max
+  }
+
+  firstVertical: IndexOperation = (i) => {
+    if (i === null) {
+      return this.wholeRot.increment(i)
+    }
+    return this.modG.group(i % this.foldSize)[0]
+  }
+
+  lastVertical: IndexOperation = (i) => {
+    if (i === null) {
+      return this.wholeRot.increment(i)
+    }
+    return this.modG.group(i % this.foldSize).slice(-1)[0]
   }
 
   private foldedRotator(n: number): Rotator {

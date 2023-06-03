@@ -28,30 +28,42 @@ const TestElement = forwardRef<HTMLDivElement, TestProps>((props, ref) => {
 })
 TestElement.displayName = "TestElement"
 
+function setup(length: number, size: number, handlers?: VoidFunction[]) {
+  const e = [...Array(length)].map((_, i) => {
+    const handler = handlers ? handlers[i] : () => null
+    return (
+      <TestElement
+        key={i}
+        text={`${i}`}
+        handleClick={handler}
+      />
+    )
+  })
+
+  const target = <ActivationGrid2D foldSize={size}>{e}</ActivationGrid2D>
+
+  function assertStyle(i: number): void {
+    e.forEach((_, j) => {
+      const exp = expect(screen.getByText(`${j}`).parentElement)
+      if (j === i) {
+        exp.not.toHaveClass("css-0") // styleが有効
+      } else {
+        exp.toHaveClass("css-0") // styleが無効
+      }
+    })
+  }
+
+  return {
+    target,
+    assertStyle,
+  }
+}
+
 describe("ActivationGrid2D", () => {
   test("move style", async () => {
-    const e = [...Array(5)].map((_, i) => {
-      return (
-        <TestElement
-          key={i}
-          text={`${i}`}
-        />
-      )
-    })
-
-    const target = <ActivationGrid2D foldSize={3}>{e}</ActivationGrid2D>
+    const { target, assertStyle } = setup(5, 3)
     const user = userEvent.setup()
     const r = render(target)
-    function assertStyle(i: number): void {
-      ;[...Array(5)].forEach((_, j) => {
-        const exp = expect(screen.getByText(`${j}`).parentElement)
-        if (j === i) {
-          exp.not.toHaveClass("css-0") // styleが有効
-        } else {
-          exp.toHaveClass("css-0") // styleが無効
-        }
-      })
-    }
     const tgt = () => r.getByTestId("activation-grid-2d")
     assertStyle(99) // no style
 
@@ -126,21 +138,12 @@ describe("ActivationGrid2D", () => {
 
   test("fire click event", async () => {
     let current: number | null = null
-
-    const e = [...Array(3)].map((_, i) => {
-      const handleClick = () => {
+    const handlers = [...Array(3)].map((_, i) => {
+      return () => {
         current = i
       }
-
-      return (
-        <TestElement
-          key={i}
-          text={`${i}`}
-          handleClick={handleClick}
-        />
-      )
     })
-    const target = <ActivationGrid2D foldSize={2}>{e}</ActivationGrid2D>
+    const { target } = setup(3, 2, handlers)
     const user = userEvent.setup()
     const r = render(target)
     const tgt = () => r.getByTestId("activation-grid-2d")
@@ -157,5 +160,25 @@ describe("ActivationGrid2D", () => {
     await user.keyboard("{ArrowRight}")
     await user.keyboard("{Enter}")
     expect(current).toBe(1)
+  })
+
+  test("to edges", async () => {
+    const { target, assertStyle } = setup(9, 3)
+    const user = userEvent.setup()
+    const r = render(target)
+    const tgt = () => r.getByTestId("activation-grid-2d")
+
+    // 0 1 2
+    // 3 4 5
+    // 6 7 8
+    await user.click(r.getByText("4")) // set at center
+    await user.keyboard("{Control>}{ArrowLeft}{/Control}")
+    assertStyle(3)
+    await user.keyboard("{Control>}{ArrowRight}{/Control}")
+    assertStyle(5)
+    await user.keyboard("{Control>}{ArrowUp}{/Control}")
+    assertStyle(2)
+    await user.keyboard("{Control>}{ArrowDown}{/Control}")
+    assertStyle(8)
   })
 })

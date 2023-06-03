@@ -188,4 +188,13 @@ describe("IndexFolder", () => {
     expect(f2.decrementVertical(2)).toBe(2)
     expect(f2.decrementVertical(3)).toBe(0)
   })
+
+  test("to edge", () => {
+    const f = new IndexFolder(9, 3)
+    const center = 4
+    expect(f.firstHorizontal(center)).toBe(3)
+    expect(f.lastHorizontal(center)).toBe(5)
+    expect(f.firstVertical(center)).toBe(1)
+    expect(f.lastVertical(center)).toBe(7)
+  })
 })
