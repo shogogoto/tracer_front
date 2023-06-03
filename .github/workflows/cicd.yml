@@ -18,6 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+          fetch-depth: 0 # Required to retrieve git history
 
     - name: Setup Node.js
       uses: actions/setup-node@v3
@@ -40,6 +42,13 @@ jobs:
     - name: Check format
       run: |
         npm run format
+
+    - name: Publish to Chromatic
+      uses: chromaui/action@v1
+      with:
+        projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+        exitZeroOnChanges: true
+        onlyChanged: true # TurboSnap enable
 
     - name: Deploy to surge
       run: |

@@ -1,26 +1,6 @@
-// import BACKEND from "@/features/api"
 import axios from "axios"
-// import { type AxiosResponse } from "axios"
 
-interface DependencyStatistics {
-  upper_neighber_count: number
-  lower_neighbor_count: number
-  all_upper_count: number
-  all_lower_count: number
-  max_distance_from_roots: number
-  max_distance_from_leaves: number
-}
-
-interface Concept {
-  name: string
-  description: string
-  uid: string
-}
-
-interface ConceptWithStatistics {
-  concept: Concept
-  statistics: DependencyStatistics
-}
+import type { ConceptWithStatistics } from "../types"
 
 const baseUrl = import.meta.env.VITE_BACKEND_URI as string
 

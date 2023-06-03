@@ -1,4 +1,5 @@
 import { rest } from "msw"
+
 import { getByName } from "./mock"
 
 const baseUrl = import.meta.env.VITE_BACKEND_URI as string

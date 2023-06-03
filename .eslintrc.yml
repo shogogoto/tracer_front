@@ -3,6 +3,7 @@ env:
   es2021: true
 extends:
   - plugin:react/recommended
+  - plugin:react-hooks/recommended
   - standard-with-typescript
   # extendsの読み込みは上から順に上書きされていくので、この設定は最後に書くこと
   - prettier
@@ -13,8 +14,34 @@ parserOptions:
   project: ./tsconfig.json
 plugins:
   - react
-rules: {
+  - unused-imports
+  - import
+ignorePatterns:
+  - vite.config.ts
+  - vitest.setup.ts
+rules:
   "react/react-in-jsx-scope": "off"
-  , "@typescript-eslint/triple-slash-reference": "off"
-  , "@typescript-eslint/consistent-type-definitions": "off"
-}
+  "@typescript-eslint/triple-slash-reference": "off"
+  "@typescript-eslint/consistent-type-definitions": "off"
+  "react/no-unknown-property": ["error", { "ignore": ["css"] }]
+  "unused-imports/no-unused-imports": "error"
+  indent:
+      - 1
+  import/order:
+    - error
+    - groups:
+        - builtin
+        - external
+        - internal
+        -
+          - parent
+          - sibling
+        - object
+        - type
+        - index
+      newlines-between: always
+      pathGroupsExcludedImportTypes:
+        - builtin
+      alphabetize:
+        order: asc
+        caseInsensitive: true

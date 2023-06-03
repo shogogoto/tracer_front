@@ -15,16 +15,34 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
     "baseUrl":"./",
     "paths": {
       "@/*": ["src/*"],
       "~/*": ["public/*"]
     },
     "types": [
-      "vitest/globals"
+      "vitest/globals",
+      "jest",
+      "node",
+      "@testing-library/jest-dom",
+      "@emotion/react/types/css-prop"
+    ],
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin",
+        "tags": [
+          "styled",
+          "css",
+          "sty"
+        ]
+      }
     ]
   },
   "include": ["src"],
-  "exclude": ["**./*.spec.{ts,tsx}"],
+  "exclude": [
+    "**/*.spec.ts",
+    "**/*.spec.tsx"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
