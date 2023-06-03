@@ -1,4 +1,5 @@
 import useActivation1D from "./useActivation1D"
+import useActivation2D from "./useActivation2D"
 import useActiveStyle from "./useActiveStyle"
 import useCurrentNode from "./useCurrentNode"
 import useForwardClick from "./useForwardClick"
@@ -11,5 +12,6 @@ export {
   useForwardClick,
   useStyle,
   useActivation1D,
+  useActivation2D,
   useActiveStyle,
 }

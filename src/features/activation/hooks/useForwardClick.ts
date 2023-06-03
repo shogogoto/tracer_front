@@ -2,13 +2,13 @@ import { useRef, useCallback, cloneElement, createRef } from "react"
 
 import { activatableToArray } from "../utils"
 
-import type { Activatables, Index } from "../types"
-import type { ReactElement, RefObject, MutableRefObject } from "react"
+import type { Activatable, Activatables, Index } from "../types"
+import type { RefObject, MutableRefObject } from "react"
 
 type Refs = Array<RefObject<HTMLElement>>
 
 type State = {
-  elements: ReactElement[]
+  elements: Activatable[]
   refs: MutableRefObject<Refs>
 }
 

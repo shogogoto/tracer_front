@@ -13,11 +13,11 @@ type StyleType = "horizon" | "vertical"
 
 type StyleProps = [plusKey: string, minusKey: string, style: SerializedStyles]
 
-const horizonStyle = css`
+export const horizonStyle = css`
   display: flex;
   flex-wrap: nowrap;
 `
-const nonStyle = css``
+export const nonStyle = css``
 
 const keyProps = (t: StyleType): StyleProps => {
   return t === "horizon"

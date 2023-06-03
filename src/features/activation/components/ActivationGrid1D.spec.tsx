@@ -46,7 +46,7 @@ describe("ActivationGrid1D", () => {
     })
   }
 
-  test("various activation", async () => {
+  test("move style", async () => {
     const user = userEvent.setup()
     const x = render(target)
     const tgt = () => x.getByTestId("activation-grid-1d")

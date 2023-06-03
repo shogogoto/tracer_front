@@ -5,13 +5,13 @@ import useRotateChildren from "./useRotateChildren"
 import useStyle from "./useStyle"
 import { clickedChildIndex, IndexFolder } from "../utils"
 
-import type { Activatables, Index } from "../types"
+import type { Activatable, Activatables, Index } from "../types"
 import type { Rotator } from "../utils"
 import type { SerializedStyles } from "@emotion/react"
 import type { MouseEventHandler } from "react"
 
 type State = {
-  elements: Activatables
+  elements: Activatable[]
   index: Index
   rotator: Rotator
   isStyled: boolean[]
