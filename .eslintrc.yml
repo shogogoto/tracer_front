@@ -7,6 +7,7 @@ extends:
   - standard-with-typescript
   # extendsの読み込みは上から順に上書きされていくので、この設定は最後に書くこと
   - prettier
+  - plugin:@tanstack/eslint-plugin-query/recommended
 overrides: []
 parserOptions:
   ecmaVersion: latest
@@ -16,10 +17,13 @@ plugins:
   - react
   - unused-imports
   - import
+  - "@tanstack/query"
 ignorePatterns:
   - vite.config.ts
   - vitest.setup.ts
 rules:
+  "@tanstack/query/exhaustive-deps": error
+  "@tanstack/query/prefer-query-object-syntax": error
   react/react-in-jsx-scope: off
   "@typescript-eslint/triple-slash-reference": off
   "@typescript-eslint/consistent-type-definitions": off
