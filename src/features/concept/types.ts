@@ -8,8 +8,18 @@ export interface Concept extends ConceptProps {
   uid: string
 }
 
+export type DepNeighborCount = {
+  upper: number
+  lower: number
+}
+
+export type DepDistances = {
+  fromRoot: number
+  fromLeaves: number
+}
+
 export interface DependencyStatistics {
-  upper_neighber_count: number
+  upper_neighbor_count: number
   lower_neighbor_count: number
   all_upper_count: number
   all_lower_count: number

@@ -3,7 +3,7 @@ import CyclicSwitch from "./CyclicSwitch"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
-  title: "CyclicSwitch",
+  title: "activation/CyclicSwitch",
   component: CyclicSwitch,
 } satisfies Meta<typeof CyclicSwitch>
 
