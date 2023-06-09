@@ -40,9 +40,5 @@
     ]
   },
   "include": ["src"],
-  "exclude": [
-    "**/*.spec.ts",
-    "**/*.spec.tsx"
-  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
