@@ -1,38 +1,39 @@
 import { css } from "@emotion/react"
-import { type ComponentProps, type FC, type Ref } from "react"
+import { type ComponentProps } from "react"
+import { forwardRef } from "react"
 import { FaSearch } from "react-icons/fa"
 
 type Props = ComponentProps<"input"> &
   Partial<{
-    value: string
-    onChange: (value: string) => void
-    onBlur: () => void
-    ref: Ref<HTMLInputElement>
+    error: string
+    submitButton: boolean
   }>
 
-const defaultOnChange = (v: string): void => {}
+const id = "search-by-name"
 
-const SearchNameInput: FC<Props> = (props) => {
-  const onChange = props.onChange ?? defaultOnChange
-
-  return (
-    <div css={searchBarStyle}>
-      <FaSearch css={iconStyle} />
-      <input
-        {...props}
-        type="search"
-        value={props.value}
-        placeholder="search concepts by name"
-        onChange={(ev) => {
-          onChange(ev.target.value)
-        }}
-        onBlur={props.onBlur}
-        ref={props.ref}
-      />
+export const SearchNameInput = forwardRef<HTMLInputElement, Props>(
+  (props, ref) => (
+    <div>
+      <div css={searchBarStyle}>
+        <label htmlFor={id}>
+          <FaSearch css={iconStyle} />
+        </label>
+        <input
+          id={id}
+          {...props}
+          type="search"
+          value={props.value}
+          placeholder="search concepts by name"
+          ref={ref}
+        />
+        {props.submitButton != null && <button type="submit">検索</button>}
+      </div>
+      <p css={errorStyle}>{props.error}</p>
     </div>
   )
-}
+)
 
+SearchNameInput.displayName = "SearchNameInputRef"
 export default SearchNameInput
 
 const WIDTH = "15rem"
@@ -59,10 +60,20 @@ const searchBarStyle = css`
 
   > input::placeholder {
     text-align: left;
-    font-size: 15px;
+  }
+
+  > button {
+    width: 4rem;
+    border-radius: 999px;
+    background-color: #ccffff;
+    border: 1px solid lightgray;
   }
 `
 
 const iconStyle = css`
   margin-right: 5px;
+`
+
+const errorStyle = css`
+  color: red;
 `
