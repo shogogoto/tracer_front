@@ -110,3 +110,6 @@ terraform.tfstate*
 
 # swc
 .swc/
+
+# storybook
+storybook-static
