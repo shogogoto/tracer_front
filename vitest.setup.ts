@@ -9,7 +9,7 @@ expect.extend(matchers)
 // jsdomでは以下のメソッドが実装されていないらしいのでmock
 window.HTMLElement.prototype.scrollIntoView = function () {}
 
-import { server } from "./src/__mock__/"
+import { server } from "./.storybook/server"
 
 beforeAll(() => server.listen({ onUnhandledRequest: "error" }))
 afterEach(() => server.resetHandlers())
