@@ -15,7 +15,7 @@ import { setLogger } from "react-query"
 beforeAll(() => {
   setLogger({
     log: console.log,
-    warn: console.log,
+    warn: console.warn,
     error: () => {},
   })
   server.listen({ onUnhandledRequest: "error" })
