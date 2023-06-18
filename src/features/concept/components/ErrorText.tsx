@@ -11,7 +11,7 @@ type Props = {
 }
 
 const ErrorText: FC<Props> = (props) => {
-  return <p css={style}>{props.message}</p>
+  return <div css={style}>{props.message}</div>
 }
 
 export default ErrorText

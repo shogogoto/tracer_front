@@ -1,0 +1,54 @@
+import { css } from "@emotion/react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { type FC } from "react"
+import { type SubmitHandler, useForm } from "react-hook-form"
+import { z } from "zod"
+
+import SearchNameInput from "./SearchNameInput"
+import { useConceptsByName } from "../api/read"
+import { wrapAsync } from "../utils"
+
+const schema = z.object({
+  searchName: z.string().min(1),
+})
+type FormType = z.infer<typeof schema>
+
+const SearchBar: FC = () => {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    getValues,
+  } = useForm<FormType>({
+    resolver: zodResolver(schema),
+  })
+
+  const { searchName } = getValues()
+  const result = useConceptsByName(searchName)
+
+  const onValid: SubmitHandler<FormType> = (_) => {}
+
+  return (
+    <div>
+      <form
+        css={style}
+        onSubmit={wrapAsync(handleSubmit(onValid))}
+      >
+        <SearchNameInput
+          {...register("searchName")}
+          error={errors.searchName?.message}
+        />
+      </form>
+      <p>
+        {result?.data?.join(",")}
+        {result.error?.message}
+      </p>
+    </div>
+  )
+}
+
+export default SearchBar
+
+const style = css`
+  display: flex;
+`
