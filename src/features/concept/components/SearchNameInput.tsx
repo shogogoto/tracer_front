@@ -3,6 +3,8 @@ import { type ComponentProps } from "react"
 import { forwardRef } from "react"
 import { FaSearch } from "react-icons/fa"
 
+import ErrorText from "./ErrorText"
+
 type Props = ComponentProps<"input"> &
   Partial<{
     error: string
@@ -10,6 +12,7 @@ type Props = ComponentProps<"input"> &
   }>
 
 const id = "search-by-name"
+export const placeHolder = "search concepts by name"
 
 export const SearchNameInput = forwardRef<HTMLInputElement, Props>(
   (props, ref) => (
@@ -23,12 +26,12 @@ export const SearchNameInput = forwardRef<HTMLInputElement, Props>(
           {...props}
           type="search"
           value={props.value}
-          placeholder="search concepts by name"
+          placeholder={placeHolder}
           ref={ref}
         />
         {props.submitButton != null && <button type="submit">検索</button>}
       </div>
-      <p css={errorStyle}>{props.error}</p>
+      <ErrorText message={props.error} />
     </div>
   )
 )
@@ -72,8 +75,4 @@ const searchBarStyle = css`
 
 const iconStyle = css`
   margin-right: 5px;
-`
-
-const errorStyle = css`
-  color: red;
 `
