@@ -14,8 +14,9 @@ jobs:
     permissions:
       contents: 'read'
       id-token: 'write'
-
     runs-on: ubuntu-latest
+    env:
+      VITE_INTERNAL: true
     steps:
     - uses: actions/checkout@v3
       with:
