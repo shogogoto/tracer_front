@@ -8,6 +8,7 @@ on:
 
 env:
   NODE_VERSION: '18.x'
+  NODE_ENV: "development"
 
 jobs:
   cicd:
@@ -15,12 +16,10 @@ jobs:
       contents: 'read'
       id-token: 'write'
     runs-on: ubuntu-latest
-    env:
-      VITE_INTERNAL: true
     steps:
     - uses: actions/checkout@v3
       with:
-          fetch-depth: 0 # Required to retrieve git history
+        fetch-depth: 0 # Required to retrieve git history
 
     - name: Setup Node.js
       uses: actions/setup-node@v3
