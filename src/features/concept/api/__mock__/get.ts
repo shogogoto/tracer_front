@@ -1,14 +1,16 @@
+import { type ConceptWithStatistics } from "../../types"
 import { one, stats } from "../../utils"
 
 import type { MockResolver } from "./types"
 
-export const mockedConceptsList = [...Array(10)].map((_, i) => {
-  return {
-    item: one(`name${i}`, `description${i}`),
-    statistics: stats(),
-  }
-})
-
+export const mockedConceptsList = (n: number): ConceptWithStatistics[] => {
+  return [...Array(n)].map((_, i) => {
+    return {
+      item: one(`name${i}`, `description${i}`),
+      statistics: stats(),
+    }
+  })
+}
 export const getSuccess: MockResolver = async (req, res, ctx) => {
   const name = req.url.searchParams.get("name")
 
@@ -20,5 +22,10 @@ export const getSuccess: MockResolver = async (req, res, ctx) => {
     return await res(ctx.status(500))
   }
 
-  return await res(ctx.status(200), ctx.json(mockedConceptsList))
+  const num = Number(name)
+  if (!Number.isNaN(num)) {
+    return await res(ctx.status(200), ctx.json(mockedConceptsList(num)))
+  }
+
+  return await res(ctx.status(200), ctx.json(mockedConceptsList(10)))
 }

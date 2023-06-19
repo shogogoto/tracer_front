@@ -13,19 +13,16 @@ describe("SearchBar", () => {
 
     const errorMsg = "String must contain at least 1 character(s)"
     expect(x.queryByText(errorMsg)).not.toBeInTheDocument()
-    // x.debug()
 
     // 文字入力なしでinvalid
     await user.click(s)
     await user.keyboard("{Enter}")
     expect(x.queryByText(errorMsg)).toBeInTheDocument()
-    // x.debug()
 
     // 文字入力したらvalid
     await user.keyboard("any")
     expect(x.queryByText(errorMsg)).not.toBeInTheDocument()
     await user.keyboard("{Enter}")
-    // x.debug()
 
     // 検索文字列をクリアしたら再びinvalid
     await user.keyboard("{BackSpace>3}")
@@ -34,6 +31,5 @@ describe("SearchBar", () => {
     await user.keyboard("{BackSpace>5}")
     await user.keyboard("fail")
     await user.keyboard("{Enter}")
-    x.debug()
   })
 })

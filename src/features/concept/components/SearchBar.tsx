@@ -5,6 +5,7 @@ import { type SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
 
 import SearchNameInput from "./SearchNameInput"
+import SearchResult from "./SearchResult"
 import { useConceptsByName } from "../api/read"
 import { wrapAsync } from "../utils"
 
@@ -39,10 +40,11 @@ const SearchBar: FC = () => {
           error={errors.searchName?.message}
         />
       </form>
-      <p>
-        {result?.data?.join(",")}
-        {result.error?.message}
-      </p>
+      <SearchResult
+        isLoading={result.isLoading}
+        errorMessage={result.error?.message}
+        data={result.data}
+      />
     </div>
   )
 }

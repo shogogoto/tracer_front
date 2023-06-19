@@ -4,7 +4,7 @@ export interface ConceptProps {
 }
 
 // interfaceだとComponent Propsの型として認識されない
-export interface Concept extends ConceptProps {
+export type Concept = ConceptProps & {
   uid: string
 }
 
@@ -28,6 +28,6 @@ export interface DependencyStatistics {
 }
 
 export type ConceptWithStatistics = {
-  concept: Concept
+  item: Concept
   statistics: DependencyStatistics
 }
