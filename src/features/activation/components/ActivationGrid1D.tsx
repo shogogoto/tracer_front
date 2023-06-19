@@ -8,6 +8,7 @@ import type { Activatables, Index } from "../types"
 import type { SerializedStyles } from "@emotion/react"
 import type { FC, LegacyRef } from "react"
 
+
 type StyleType = "horizon" | "vertical"
 
 type StyleProps = [plusKey: string, minusKey: string, style: SerializedStyles]

@@ -2,6 +2,7 @@ import { css } from "@emotion/react"
 
 import type { FC } from "react"
 
+
 const style = css`
   color: red;
 `

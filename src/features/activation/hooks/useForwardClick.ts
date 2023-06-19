@@ -5,6 +5,7 @@ import { activatableToArray } from "../utils"
 import type { Activatable, Activatables, Index } from "../types"
 import type { RefObject, MutableRefObject } from "react"
 
+
 type Refs = Array<RefObject<HTMLElement>>
 
 type State = {

@@ -1,5 +1,6 @@
 import type { Index, IndexOperation } from "../types"
 
+
 export type Rotator = {
   min: Index
   max: Index

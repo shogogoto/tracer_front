@@ -9,6 +9,7 @@ import { clickedChildIndex, reshapeJagged2D } from "../utils"
 import type { Activatables, Index } from "../types"
 import type { MouseEventHandler, ReactElement } from "react"
 
+
 type Props = {
   children: Activatables
   foldSize: number

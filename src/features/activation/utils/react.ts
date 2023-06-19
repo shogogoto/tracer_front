@@ -6,6 +6,7 @@ import { rotatableToArray } from "./toarray"
 
 import type { Index, Rotatable } from "../types"
 
+
 export function countChildren(n: ReactNode): number {
   let count: number = -1
   if (isValidElement(n)) {

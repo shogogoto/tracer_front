@@ -2,6 +2,7 @@ import { v4 as uuid } from "uuid"
 
 import type { Concept, DependencyStatistics } from "@/features/concept/types"
 
+
 type Name = Concept["name"]
 type Desc = Concept["description"]
 

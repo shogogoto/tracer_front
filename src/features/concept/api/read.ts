@@ -5,6 +5,7 @@ import type { AxiosError } from "axios"
 
 import { axios } from "@/features/lib"
 
+
 export const read = async (name: string): Promise<ConceptWithStatistics[]> => {
   const res = await axios.get(`/concepts?name=${name}`)
   return res.data

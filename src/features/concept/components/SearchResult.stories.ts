@@ -3,6 +3,7 @@ import { mockedConceptsList } from "../api/__mock__/get"
 
 import type { Meta, StoryObj } from "@storybook/react"
 
+
 const meta = {
   title: "concepts/SearchResult",
   component: SearchResult,

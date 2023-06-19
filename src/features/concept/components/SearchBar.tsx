@@ -9,6 +9,7 @@ import SearchResult from "./SearchResult"
 import { useConceptsByName } from "../api/read"
 import { wrapAsync } from "../utils"
 
+
 const schema = z.object({
   searchName: z.string().min(1),
 })

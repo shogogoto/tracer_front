@@ -5,6 +5,7 @@ import { activatableToArray } from "../utils"
 import type { Activatable, Activatables, Index } from "../types"
 import type { SerializedStyles } from "@emotion/react"
 
+
 type State = {
   isStyled: boolean[]
   elements: Activatable[]

@@ -3,6 +3,7 @@ import { css } from "@emotion/react"
 import type { Concept } from "../types"
 import type { FC } from "react"
 
+
 const line = css`
   display: grid;
   grid-template-columns: 15rem 1fr; // 辞書の用例の文字数は，平均19.7文字

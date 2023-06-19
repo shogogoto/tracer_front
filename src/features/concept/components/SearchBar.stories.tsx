@@ -5,6 +5,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 import { wrapper } from "@/features/test"
 
+
 const meta = {
   title: "concepts/SearchBar",
   component: SearchBar,
