@@ -9,7 +9,7 @@ describe("hook: 名前でConceptを取得", () => {
     )
     await waitFor(async () => {
       const waited = await result.current
-      console.log(result.current)
+      // console.log(result.current)
       return waited.length === 2
     })
   })

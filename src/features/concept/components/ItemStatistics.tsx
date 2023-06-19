@@ -7,10 +7,11 @@ import type { DependencyStatistics } from "../types"
 import type { FC } from "react"
 
 const itemStatsParent = css`
-  display: flex;
-  flex-wrap: wrap;
+  // display: flex;
+  // flex-wrap: wrap;
 
   > a {
+    text-align: center;
     padding: 1rem;
   }
 `

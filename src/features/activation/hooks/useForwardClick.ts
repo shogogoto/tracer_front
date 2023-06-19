@@ -36,8 +36,8 @@ const useForwardClick = (elms: Activatables): ReturnType => {
     if (i === null) return
     refs.current[i].current?.scrollIntoView({
       behavior: "auto",
-      block: "nearest", // vertical
-      inline: "nearest", // horizon
+      block: "center", // vertical
+      inline: "center", // horizon
     })
   }, [])
 

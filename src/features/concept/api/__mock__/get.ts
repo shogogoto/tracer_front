@@ -27,5 +27,5 @@ export const getSuccess: MockResolver = async (req, res, ctx) => {
     return await res(ctx.status(200), ctx.json(mockedConceptsList(num)))
   }
 
-  return await res(ctx.status(200), ctx.json(mockedConceptsList(10)))
+  return await res(ctx.status(200), ctx.json(mockedConceptsList(50)))
 }

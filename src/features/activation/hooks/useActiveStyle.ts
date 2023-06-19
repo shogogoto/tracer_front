@@ -42,12 +42,12 @@ const useActiveStyle = (props: Props): ReturnType => {
 
   const toggle = useCallback(
     (next: Index) => {
-      fFn.scrollIntoView(next)
       rFn.setIndex((prev) => {
         sFn.toggleStyle(prev)
         sFn.toggleStyle(next)
         return next
       })
+      fFn.scrollIntoView(next)
     },
     [sFn, rFn, fFn]
   )

@@ -8,7 +8,7 @@ export const ConceptRoutes: FC = () => {
         path=""
         element={
           <>
-            <div>developping now</div>
+            <div>developing now</div>
           </>
         }
       />

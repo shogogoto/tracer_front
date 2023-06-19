@@ -33,6 +33,9 @@ rules:
   unused-imports/no-unused-imports: "error"
   indent:
     - 1
+  import/newline-after-import:
+    - error
+    - count: 3
   import/order:
     - error
     - groups:

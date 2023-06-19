@@ -11,7 +11,7 @@ type Props = {
 
 const ConceptView = forwardRef<HTMLDivElement, Props>((props, ref) => {
   return (
-    <div>
+    <div ref={ref}>
       <ConceptItem
         isLineStyle={false}
         concept={props.item.item}
