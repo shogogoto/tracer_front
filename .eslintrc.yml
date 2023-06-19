@@ -18,6 +18,7 @@ plugins:
   - unused-imports
   - import
   - "@tanstack/query"
+  - import-newlines
 ignorePatterns:
   - vite.config.ts
   - vitest.setup.ts
@@ -36,6 +37,11 @@ rules:
   import/newline-after-import:
     - error
     - count: 3
+  import-newlines/enforce:
+    - error
+    - items: 4
+      max-len: 80
+      semi: false
   import/order:
     - error
     - groups:
