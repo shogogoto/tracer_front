@@ -3,7 +3,6 @@ import { one, stats } from "../../utils"
 
 import type { MockResolver } from "./types"
 
-
 export const mockedConceptsList = (n: number): ConceptWithStatistics[] => {
   return [...Array(n)].map((_, i) => {
     return {
@@ -28,5 +27,5 @@ export const getSuccess: MockResolver = async (req, res, ctx) => {
     return await res(ctx.status(200), ctx.json(mockedConceptsList(num)))
   }
 
-  return await res(ctx.status(200), ctx.json(mockedConceptsList(50)))
+  return await res(ctx.status(200), ctx.json(mockedConceptsList(10)))
 }
