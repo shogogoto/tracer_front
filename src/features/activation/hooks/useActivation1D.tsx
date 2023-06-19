@@ -7,6 +7,7 @@ import type { Activatables, Index } from "../types"
 import type { MouseEventHandler, ReactElement } from "react"
 
 
+
 export const cssActivated = css`
   color: red;
   border: solid;

@@ -11,6 +11,7 @@ import ActivationGrid2D from "@/features/activation/components/ActivationGrid2D"
 import { type Activatables } from "@/features/activation/types"
 
 
+
 type Props = {
   isLoading: boolean
   errorMessage?: string

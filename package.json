@@ -90,8 +90,8 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "eslint --cache --fix --ext .ts,.tsx",
-      "prettier --cache --write"
+      "prettier --cache --write",
+      "eslint --cache --fix --ext .ts,.tsx"
     ]
   },
   "msw": {

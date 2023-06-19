@@ -12,6 +12,7 @@ import type { Rotator } from "../utils"
 import type { ReactNode, Dispatch, SetStateAction } from "react"
 
 
+
 type State = {
   child: ReactNode
   index: Index

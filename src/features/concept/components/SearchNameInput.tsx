@@ -6,6 +6,7 @@ import { FaSearch } from "react-icons/fa"
 import ErrorText from "./ErrorText"
 
 
+
 type Props = ComponentProps<"input"> &
   Partial<{
     error: string

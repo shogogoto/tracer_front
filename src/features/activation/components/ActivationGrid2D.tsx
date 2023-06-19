@@ -7,6 +7,7 @@ import type { Activatables } from "../types"
 import type { FC } from "react"
 
 
+
 type Props = {
   children: Activatables
   foldSize: number

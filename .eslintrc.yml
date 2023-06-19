@@ -35,7 +35,7 @@ rules:
     - 1
   import/newline-after-import:
     - error
-    - count: 2
+    - count: 3
   import/order:
     - error
     - groups:

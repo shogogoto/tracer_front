@@ -7,6 +7,7 @@ import type { Activatables } from "../types"
 import type { Meta, StoryObj } from "@storybook/react"
 
 
+
 const meta = {
   title: "activation/ActivationGrid1D",
   component: ActivationGrid1D,

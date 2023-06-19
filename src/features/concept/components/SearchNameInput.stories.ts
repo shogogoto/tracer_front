@@ -3,6 +3,7 @@ import SearchNameInput from "./SearchNameInput"
 import type { Meta, StoryObj } from "@storybook/react"
 
 
+
 const meta = {
   title: "concepts/SearchNameInput",
   component: SearchNameInput,
