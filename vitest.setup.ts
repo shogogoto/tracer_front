@@ -10,18 +10,13 @@ expect.extend(matchers)
 window.HTMLElement.prototype.scrollIntoView = function () {}
 
 import { server } from "./.storybook/server"
-import { setLogger } from "react-query"
 
 beforeAll(() => {
-  setLogger({
-    log: console.log,
-    warn: console.warn,
-    error: () => {},
-  })
   server.listen({ onUnhandledRequest: "error" })
 })
+
 afterEach(() => {
   server.resetHandlers()
-  setLogger(console)
 })
+
 afterAll(() => server.close())

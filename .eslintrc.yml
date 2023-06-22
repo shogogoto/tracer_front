@@ -24,7 +24,6 @@ ignorePatterns:
   - vitest.setup.ts
 rules:
   "@tanstack/query/exhaustive-deps": error
-  "@tanstack/query/prefer-query-object-syntax": error
   react/react-in-jsx-scope: off
   "@typescript-eslint/triple-slash-reference": off
   "@typescript-eslint/consistent-type-definitions": off
