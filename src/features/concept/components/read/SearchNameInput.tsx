@@ -3,8 +3,7 @@ import { type ComponentProps } from "react"
 import { forwardRef } from "react"
 import { FaSearch } from "react-icons/fa"
 
-import ErrorText from "./ErrorText"
-
+import ErrorText from "../ErrorText"
 
 
 type Props = ComponentProps<"input"> &

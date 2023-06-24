@@ -1,12 +1,11 @@
 import SearchResult from "./SearchResult"
-import { mockedConceptsList } from "../api/__mock__/get"
+import { mockedConceptsList } from "../../api/__mock__/get"
 
 import type { Meta, StoryObj } from "@storybook/react"
 
 
-
 const meta = {
-  title: "concepts/SearchResult",
+  title: "concepts/read/SearchResult",
   component: SearchResult,
   tags: ["autodocs"],
 } satisfies Meta<typeof SearchResult>

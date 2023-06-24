@@ -4,7 +4,6 @@ import { one, stats } from "../../utils"
 import type { MockResolver } from "./types"
 
 
-
 export const mockedConceptsList = (n: number): ConceptWithStatistics[] => {
   return [...Array(n)].map((_, i) => {
     return {
@@ -13,7 +12,7 @@ export const mockedConceptsList = (n: number): ConceptWithStatistics[] => {
     }
   })
 }
-export const getSuccess: MockResolver = async (req, res, ctx) => {
+export const get: MockResolver = async (req, res, ctx) => {
   const name = req.url.searchParams.get("name")
 
   if (name === "empty" || name === "") {

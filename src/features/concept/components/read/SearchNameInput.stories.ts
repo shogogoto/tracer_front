@@ -3,9 +3,8 @@ import SearchNameInput from "./SearchNameInput"
 import type { Meta, StoryObj } from "@storybook/react"
 
 
-
 const meta = {
-  title: "concepts/SearchNameInput",
+  title: "concepts/read/SearchNameInput",
   component: SearchNameInput,
   tags: ["autodocs"],
 } satisfies Meta<typeof SearchNameInput>

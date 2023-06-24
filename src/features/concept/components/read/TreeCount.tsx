@@ -4,7 +4,6 @@ import { Tooltip } from "react-tooltip"
 import type { FC } from "react"
 
 
-
 type TreeProps = {
   neighborUpperCount: number
   neighborLowerCount: number

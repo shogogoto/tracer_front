@@ -6,9 +6,9 @@ import { z } from "zod"
 
 import SearchNameInput from "./SearchNameInput"
 import SearchResult from "./SearchResult"
-import { useConceptsByName } from "../api/read"
-import { wrapAsync } from "../utils"
 
+import { useConceptsByName } from "@/features/concept/api"
+import { wrapAsync } from "@/features/concept/utils"
 
 
 const schema = z.object({

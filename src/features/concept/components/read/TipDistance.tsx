@@ -4,7 +4,6 @@ import { Tooltip } from "react-tooltip"
 import type { FC } from "react"
 
 
-
 type DistProps = {
   fromLeaf: number
   fromRoot: number

@@ -3,9 +3,8 @@ import { TipDistance } from "./TipDistance"
 import type { Meta, StoryObj } from "@storybook/react"
 
 
-
 const meta = {
-  title: "concepts/TipDistance",
+  title: "concepts/read/TipDistance",
   component: TipDistance,
   tags: ["autodocs"],
 } satisfies Meta<typeof TipDistance>

@@ -1,15 +1,14 @@
 import { useState } from "react"
 
 import ConceptView from "./ConceptView"
-import ErrorText from "./ErrorText"
 import SearchResultConfig from "./SearchResultConfig"
+import ErrorText from "../ErrorText"
 
-import type { ConceptWithStatistics } from "../types"
+import type { ConceptWithStatistics } from "../../types"
 import type { FC } from "react"
 
 import ActivationGrid2D from "@/features/activation/components/ActivationGrid2D"
 import { type Activatables } from "@/features/activation/types"
-
 
 
 type Props = {

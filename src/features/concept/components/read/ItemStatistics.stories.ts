@@ -3,9 +3,8 @@ import ItemStatistics from "./ItemStatistics"
 import type { Meta, StoryObj } from "@storybook/react"
 
 
-
 const meta = {
-  title: "concepts/ItemStatistics",
+  title: "concepts/read/ItemStatistics",
   component: ItemStatistics,
   tags: ["autodocs"],
 } satisfies Meta<typeof ItemStatistics>

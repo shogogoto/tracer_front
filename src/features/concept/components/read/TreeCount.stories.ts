@@ -3,9 +3,8 @@ import { TreeCount } from "./TreeCount"
 import type { Meta, StoryObj } from "@storybook/react"
 
 
-
 const meta = {
-  title: "concepts/TreeCount",
+  title: "concepts/read/TreeCount",
   component: TreeCount,
   tags: ["autodocs"],
 } satisfies Meta<typeof TreeCount>

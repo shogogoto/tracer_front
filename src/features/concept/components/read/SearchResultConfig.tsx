@@ -3,7 +3,6 @@ import { css } from "@emotion/react"
 import type { ChangeEventHandler, FC, SetStateAction, Dispatch } from "react"
 
 
-
 type Props = {
   size: number
   setSize: Dispatch<SetStateAction<number>>

@@ -1,12 +1,11 @@
 import ConceptItem from "./ConceptItem"
-import { one } from "../utils"
+import { one } from "../../utils"
 
 import type { Meta, StoryObj } from "@storybook/react"
 
 
-
 const meta = {
-  title: "concepts/Item",
+  title: "concepts/read/Item",
   component: ConceptItem,
   tags: ["autodocs"],
 } satisfies Meta<typeof ConceptItem>

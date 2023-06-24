@@ -5,7 +5,7 @@ import { renderHook, waitFor } from "@testing-library/react"
 import { act } from "@testing-library/react"
 import { useCreateConcept, create } from "./create"
 import { ConceptProps } from "../types"
-import { useMutation } from "@tanstack/react-query"
+import { useUpdateConcept } from "./update"
 
 describe("concept api", () => {
   test("read_success", async () => {
@@ -32,7 +32,6 @@ describe("concept api", () => {
     await waitFor(() => expect(result.current.isPending).toBe(false))
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     await waitFor(() => expect(result.current.data?.status).toBe(201))
-    console.log(result.current)
 
     await waitFor(() =>
       result.current.mutate({
@@ -44,6 +43,59 @@ describe("concept api", () => {
     await waitFor(() =>
       expect(result.current.error?.response?.status).toBe(500)
     )
-    console.log(result.current)
+  })
+
+  test("update", async () => {
+    const { result } = renderHook(() => useUpdateConcept(), { wrapper })
+
+    await waitFor(() =>
+      result.current.mutate({
+        name: "any",
+        description: "",
+        uid: "9cdf8d73411747179d7e392995b473c1",
+      })
+    )
+    await waitFor(() => expect(result.current.isPending).toBe(false))
+    await waitFor(() => expect(result.current.isSuccess).toBe(true))
+    await waitFor(() => expect(result.current.data?.status).toBe(204))
+
+    await waitFor(() =>
+      result.current.mutate({
+        name: "fail",
+        description: "",
+        uid: "9cdf8d73411747179d7e392995b473c1",
+      })
+    )
+    await waitFor(() => expect(result.current.isSuccess).toBe(false))
+    await waitFor(() =>
+      expect(result.current.error?.response?.status).toBe(500)
+    )
+  })
+
+  test("delete", async () => {
+    const { result } = renderHook(() => useUpdateConcept(), { wrapper })
+
+    await waitFor(() =>
+      result.current.mutate({
+        name: "any",
+        description: "",
+        uid: "9cdf8d73411747179d7e392995b473c1",
+      })
+    )
+    await waitFor(() => expect(result.current.isPending).toBe(false))
+    await waitFor(() => expect(result.current.isSuccess).toBe(true))
+    await waitFor(() => expect(result.current.data?.status).toBe(204))
+
+    await waitFor(() =>
+      result.current.mutate({
+        name: "fail",
+        description: "",
+        uid: "9cdf8d73411747179d7e392995b473c1",
+      })
+    )
+    await waitFor(() => expect(result.current.isSuccess).toBe(false))
+    await waitFor(() =>
+      expect(result.current.error?.response?.status).toBe(500)
+    )
   })
 })

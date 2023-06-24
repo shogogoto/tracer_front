@@ -8,6 +8,10 @@ export type Concept = ConceptProps & {
   uid: string
 }
 
+export type CreatedConcept = ConceptProps & {
+  uid: string
+}
+
 export type DepNeighborCount = {
   upper: number
   lower: number

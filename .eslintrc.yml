@@ -35,7 +35,7 @@ rules:
     - 1
   import/newline-after-import:
     - error
-    - count: 3
+    - count: 2
   import-newlines/enforce:
     - error
     - items: 4
