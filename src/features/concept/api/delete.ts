@@ -7,20 +7,18 @@ import type { AxiosResponse, AxiosError } from "axios"
 import { axios } from "@/features/lib"
 
 
-export const delete_ = async (data: CreatedConcept): Promise<AxiosResponse> => {
-  const res = await axios.put(`/concepts`, data)
+export const delete_ = async (
+  uid: CreatedConcept["uid"]
+): Promise<AxiosResponse> => {
+  const res = await axios.delete(`/concepts/${uid}`)
   return res
 }
 
-type ApiRetType = Awaited<ReturnType<typeof update>>
-export type UpdateResult = UseMutationResult<
-  ApiRetType,
-  AxiosError,
-  CreatedConcept
->
+type ApiRetType = Awaited<ReturnType<typeof delete_>>
+export type DeleteResult = UseMutationResult<ApiRetType, AxiosError, string>
 
-export function useUpdateConcept(): UpdateResult {
+export function useUpdateConcept(): DeleteResult {
   return useMutation({
-    mutationFn: update,
+    mutationFn: delete_,
   })
 }
