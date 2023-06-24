@@ -3,7 +3,7 @@ import { css } from "@emotion/react"
 import { TipDistance } from "./TipDistance"
 import { TreeCount } from "./TreeCount"
 
-import type { DependencyStatistics } from "../types"
+import type { DependencyStatistics } from "../../types"
 import type { FC } from "react"
 
 

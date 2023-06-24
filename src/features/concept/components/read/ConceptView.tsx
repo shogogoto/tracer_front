@@ -3,7 +3,7 @@ import { forwardRef } from "react"
 import ConceptItem from "./ConceptItem"
 import ItemStatistics from "./ItemStatistics"
 
-import type { ConceptWithStatistics } from "../types"
+import type { ConceptWithStatistics } from "../../types"
 
 
 type Props = {

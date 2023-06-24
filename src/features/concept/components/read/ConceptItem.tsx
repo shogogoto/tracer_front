@@ -1,6 +1,6 @@
 import { css } from "@emotion/react"
 
-import type { Concept } from "../types"
+import type { Concept } from "../../types"
 import type { FC } from "react"
 
 
