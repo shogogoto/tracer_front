@@ -8,11 +8,10 @@ import {
 } from "react-hook-form"
 import { z } from "zod"
 
-import { useCreateConcept } from "../api"
+import { useSaveConcept } from "../api"
 import { wrapAsync } from "../utils"
 
 import type { CreateResult } from "../api"
-
 
 
 const schema = z.object({
@@ -21,6 +20,7 @@ const schema = z.object({
     .min(1, "名前は１文字以上を入力してください")
     .max(30, "名前は30文字以下を入力してください"),
   description: z.string().max(140, "説明は140字以下を入力してください"), // Twitter参考
+  uid: z.string().optional(),
 })
 
 export type ConceptFormType = z.infer<typeof schema>
@@ -31,12 +31,13 @@ type RetType = UseFormReturn<ConceptFormType> & {
   mutation: CreateResult
 }
 
-const useConceptForm = (): RetType => {
+const useConceptForm = (defaultValues: ConceptFormType): RetType => {
   const methods = useForm<ConceptFormType>({
     resolver: zodResolver(schema),
+    defaultValues,
   })
 
-  const mutation = useCreateConcept()
+  const mutation = useSaveConcept()
 
   const onValid: SubmitHandler<ConceptFormType> = (d) => {
     mutation.mutate(d)

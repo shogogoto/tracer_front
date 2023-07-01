@@ -4,16 +4,17 @@ import MutationResult from "./MutationResult"
 import useConceptForm from "../../hooks/useCreateForm"
 import ErrorText from "../ErrorText"
 
+import type { ConceptFormType } from "../../hooks/useCreateForm"
 import type { FC } from "react"
 
 
-const Form: FC = () => {
+const Form: FC<ConceptFormType> = (props) => {
   const {
     register,
     formState: { errors },
     onSubmit,
     mutation,
-  } = useConceptForm()
+  } = useConceptForm(props)
 
   return (
     <div css={style}>
@@ -70,7 +71,6 @@ const style = css`
   div {
     text-align: center;
   }
-
 
   span {
     vertical-align: top;

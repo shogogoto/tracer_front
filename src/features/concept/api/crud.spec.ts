@@ -2,10 +2,8 @@ import { useConceptsByName } from "./read"
 
 import { wrapper } from "@/features/test"
 import { renderHook, waitFor } from "@testing-library/react"
-import { act } from "@testing-library/react"
-import { useCreateConcept, create } from "./create"
-import { ConceptProps } from "../types"
-import { useUpdateConcept } from "./update"
+import { useSaveConcept } from "./save"
+import { useDeleteConcept } from "./delete"
 
 describe("concept api", () => {
   test("read_success", async () => {
@@ -22,7 +20,7 @@ describe("concept api", () => {
   })
 
   test("create", async () => {
-    const { result } = renderHook(() => useCreateConcept(), { wrapper })
+    const { result } = renderHook(() => useSaveConcept(), { wrapper })
     await waitFor(() =>
       result.current.mutate({
         name: "any",
@@ -46,7 +44,7 @@ describe("concept api", () => {
   })
 
   test("update", async () => {
-    const { result } = renderHook(() => useUpdateConcept(), { wrapper })
+    const { result } = renderHook(() => useSaveConcept(), { wrapper })
 
     await waitFor(() =>
       result.current.mutate({

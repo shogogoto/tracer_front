@@ -16,7 +16,10 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Example: Story = {
-  args: {},
+  args: {
+    name: "concept name",
+    description: "",
+  },
   decorators: [(Story) => wrapper({ children: <Story /> })],
   parameters: {
     msw: { handlers },
