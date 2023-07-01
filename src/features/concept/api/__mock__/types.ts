@@ -1,5 +1,4 @@
-import type { ResponseResolver, MockedRequest, restContext } from "msw"
+import type { ResponseResolver, RestRequest, restContext } from "msw"
 
 
-
-export type MockResolver = ResponseResolver<MockedRequest, typeof restContext>
+export type MockResolver = ResponseResolver<RestRequest, typeof restContext>

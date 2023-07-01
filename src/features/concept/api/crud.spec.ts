@@ -71,29 +71,22 @@ describe("concept api", () => {
   })
 
   test("delete", async () => {
-    const { result } = renderHook(() => useUpdateConcept(), { wrapper })
+    const { result } = renderHook(() => useDeleteConcept(), { wrapper })
 
     await waitFor(() =>
       result.current.mutate({
-        name: "any",
-        description: "",
         uid: "9cdf8d73411747179d7e392995b473c1",
       })
     )
+
     await waitFor(() => expect(result.current.isPending).toBe(false))
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     await waitFor(() => expect(result.current.data?.status).toBe(204))
 
-    await waitFor(() =>
-      result.current.mutate({
-        name: "fail",
-        description: "",
-        uid: "9cdf8d73411747179d7e392995b473c1",
-      })
-    )
+    await waitFor(() => result.current.mutate({ uid: "notFound" }))
     await waitFor(() => expect(result.current.isSuccess).toBe(false))
     await waitFor(() =>
-      expect(result.current.error?.response?.status).toBe(500)
+      expect(result.current.error?.response?.status).toBe(404)
     )
   })
 })

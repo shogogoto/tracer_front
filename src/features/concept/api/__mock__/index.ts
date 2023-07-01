@@ -12,7 +12,7 @@ const handlers = [
   rest.get(`${baseUrl}/concepts`, get),
   rest.post(`${baseUrl}/concepts`, post),
   rest.put(`${baseUrl}/concepts`, put),
-  rest.delete(`${baseUrl}/concepts`, delete_),
+  rest.delete(`${baseUrl}/concepts/:uid`, delete_),
 ]
 
 export default handlers
