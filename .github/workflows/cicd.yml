@@ -8,18 +8,18 @@ on:
 
 env:
   NODE_VERSION: '18.x'
+  NODE_ENV: "development"
 
 jobs:
   cicd:
     permissions:
       contents: 'read'
       id-token: 'write'
-
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
       with:
-          fetch-depth: 0 # Required to retrieve git history
+        fetch-depth: 0 # Required to retrieve git history
 
     - name: Setup Node.js
       uses: actions/setup-node@v3
@@ -38,10 +38,6 @@ jobs:
     - name: Check Lint
       run: |
         npm run lint
-
-    - name: Check format
-      run: |
-        npm run format
 
     - name: Publish to Chromatic
       uses: chromaui/action@v1

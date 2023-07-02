@@ -4,12 +4,26 @@ export interface ConceptProps {
 }
 
 // interfaceだとComponent Propsの型として認識されない
-export interface Concept extends ConceptProps {
+export type Concept = ConceptProps & {
   uid: string
 }
 
+export type CreatedConcept = ConceptProps & {
+  uid: string
+}
+
+export type DepNeighborCount = {
+  upper: number
+  lower: number
+}
+
+export type DepDistances = {
+  fromRoot: number
+  fromLeaves: number
+}
+
 export interface DependencyStatistics {
-  upper_neighber_count: number
+  upper_neighbor_count: number
   lower_neighbor_count: number
   all_upper_count: number
   all_lower_count: number
@@ -18,6 +32,6 @@ export interface DependencyStatistics {
 }
 
 export type ConceptWithStatistics = {
-  concept: Concept
+  item: Concept
   statistics: DependencyStatistics
 }

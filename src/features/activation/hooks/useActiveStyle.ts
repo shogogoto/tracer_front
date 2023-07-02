@@ -10,6 +10,8 @@ import type { Rotator } from "../utils"
 import type { SerializedStyles } from "@emotion/react"
 import type { MouseEventHandler } from "react"
 
+
+
 type State = {
   elements: Activatable[]
   index: Index
@@ -42,12 +44,12 @@ const useActiveStyle = (props: Props): ReturnType => {
 
   const toggle = useCallback(
     (next: Index) => {
-      fFn.scrollIntoView(next)
       rFn.setIndex((prev) => {
         sFn.toggleStyle(prev)
         sFn.toggleStyle(next)
         return next
       })
+      fFn.scrollIntoView(next)
     },
     [sFn, rFn, fFn]
   )

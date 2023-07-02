@@ -1,5 +1,4 @@
 import { css } from "@emotion/react"
-import { forwardRef } from "react"
 import { useHotkeys } from "react-hotkeys-hook"
 import { mergeRefs } from "react-merge-refs"
 
@@ -8,6 +7,8 @@ import { useActivation1D } from "../hooks"
 import type { Activatables, Index } from "../types"
 import type { SerializedStyles } from "@emotion/react"
 import type { FC, LegacyRef } from "react"
+
+
 
 type StyleType = "horizon" | "vertical"
 
@@ -62,15 +63,3 @@ const ActivationGrid1D: FC<Props> = (props) => {
 }
 
 export default ActivationGrid1D
-
-export const ActivationGrid1DRef = forwardRef<HTMLDivElement, Props>(
-  (props, ref) => {
-    return (
-      <ActivationGrid1D
-        {...props}
-        ref={ref}
-      />
-    )
-  }
-)
-ActivationGrid1DRef.displayName = "ActivationGrid1DRef"

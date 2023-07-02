@@ -7,6 +7,7 @@ extends:
   - standard-with-typescript
   # extendsの読み込みは上から順に上書きされていくので、この設定は最後に書くこと
   - prettier
+  - plugin:@tanstack/eslint-plugin-query/recommended
 overrides: []
 parserOptions:
   ecmaVersion: latest
@@ -16,17 +17,30 @@ plugins:
   - react
   - unused-imports
   - import
+  - "@tanstack/query"
+  - import-newlines
 ignorePatterns:
   - vite.config.ts
   - vitest.setup.ts
 rules:
-  "react/react-in-jsx-scope": "off"
-  "@typescript-eslint/triple-slash-reference": "off"
-  "@typescript-eslint/consistent-type-definitions": "off"
-  "react/no-unknown-property": ["error", { "ignore": ["css"] }]
-  "unused-imports/no-unused-imports": "error"
+  "@tanstack/query/exhaustive-deps": error
+  react/react-in-jsx-scope: off
+  "@typescript-eslint/triple-slash-reference": off
+  "@typescript-eslint/consistent-type-definitions": off
+  react/no-unknown-property:
+    - error
+    - ignore: [css]
+  unused-imports/no-unused-imports: "error"
   indent:
-      - 1
+    - 1
+  import/newline-after-import:
+    - error
+    - count: 2
+  import-newlines/enforce:
+    - error
+    - items: 4
+      max-len: 80
+      semi: false
   import/order:
     - error
     - groups:

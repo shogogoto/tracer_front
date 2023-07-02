@@ -1,6 +1,8 @@
 import { type FC } from "react"
 import { Route, Routes } from "react-router-dom"
 
+
+
 export const ConceptRoutes: FC = () => {
   return (
     <Routes>
@@ -8,7 +10,7 @@ export const ConceptRoutes: FC = () => {
         path=""
         element={
           <>
-            <div>developping now</div>
+            <div>developing now</div>
           </>
         }
       />

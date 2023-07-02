@@ -6,6 +6,8 @@ import { useActivation2D } from "../hooks"
 import type { Activatables } from "../types"
 import type { FC } from "react"
 
+
+
 type Props = {
   children: Activatables
   foldSize: number
